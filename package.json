@@ -9,7 +9,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "ng build --base-href ./ && electron ."
+    "build:electron": "ng build --base-href ./",
+    "start:electron": "npm run build:electron && electron .",
+    "package:win": "npm run build:electron && electron-packager . --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --platform=win32",
+    "package:mac": "npm run build:electron && electron-packager . --no-prune --ignore=/node_modules --ignore=/e2e --ignore=/src --platform=darwin"
   },
   "private": true,
   "dependencies": {
@@ -36,6 +39,7 @@
     "@types/node": "~8.9.4",
     "codelyzer": "~4.3.0",
     "electron": "^3.0.2",
+    "electron-packager": "^12.1.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.0.0",
