@@ -1,8 +1,8 @@
-const { app, BrowserWindow } = require("electron");
-const path = require("path");
-const url = require("url");
+import { app, BrowserWindow } from 'electron';
+import * as path from 'path';
+import * as url from 'url';
 
-let win;
+let win: any;
 
 function createWindow() {
   win = new BrowserWindow({ width: 800, height: 600 });
@@ -10,32 +10,31 @@ function createWindow() {
   // load the dist folder from Angular
   win.loadURL(
     url.format({
-      pathname: path.join(__dirname, `/ui/index.html`),
-      protocol: "file:",
-      slashes: true,
-      icon: path.join(__dirname, `/ui/assets/logo.png`)
+      pathname: path.join(app.getAppPath(), `/ui/index.html`),
+      protocol: 'file:',
+      slashes: true
     })
   );
 
   // The following is optional and will open the DevTools:
   // win.webContents.openDevTools()
 
-  win.on("closed", () => {
+  win.on('closed', () => {
     win = null;
   });
 }
 
-app.on("ready", createWindow);
+app.on('ready', createWindow);
 
 // on macOS, closing the window doesn't quit the app
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
 // initialize the app's main window
-app.on("activate", () => {
+app.on('activate', () => {
   if (win === null) {
     createWindow();
   }

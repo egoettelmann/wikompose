@@ -4,6 +4,7 @@
 /wikompose-ui/dist
 /wikompose-ui/tmp
 /wikompose-ui/out-tsc
+/wikompose-main/git
 /wikompose-main/ui
 
 # dependencies
