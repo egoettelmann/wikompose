@@ -2,10 +2,14 @@ import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win: any;
+let win: BrowserWindow;
 
 function createWindow() {
-  win = new BrowserWindow({ width: 800, height: 600 });
+  win = new BrowserWindow({
+    title: 'Wikompose',
+    icon: path.join(app.getAppPath(), `/ui/favicon.ico`)
+  });
+  win.setMenu(null);
 
   // load the dist folder from Angular
   win.loadURL(
