@@ -1,12 +1,15 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/tmp
-/out-tsc
+/wikompose-ui/dist
+/wikompose-ui/tmp
+/wikompose-ui/out-tsc
+/wikompose-main/ui
 
 # dependencies
 /node_modules
+/wikompose-main/node_modules
+/wikompose-ui/node_modules
 
 # IDEs and editors
 /.idea
@@ -39,5 +42,4 @@ testem.log
 Thumbs.db
 
 # Packaged folders
-/wikompose-win32-x64/
-/wikompose-darwin-x64/
+/bin/
