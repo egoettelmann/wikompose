@@ -4,11 +4,13 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { NavigationComponent } from './navigation/navigation.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent
+    NavigationComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
