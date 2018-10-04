@@ -1,34 +1,17 @@
 <aside class="menu">
-  <p class="menu-label">
-    General
-  </p>
-  <ul class="menu-list">
-    <li><a>Dashboard</a></li>
-    <li><a>Customers</a></li>
-  </ul>
-  <p class="menu-label">
-    Administration
-  </p>
-  <ul class="menu-list">
-    <li><a>Team Settings</a></li>
-    <li>
-      <a class="is-active">Manage Your Team</a>
-      <ul>
-        <li><a>Members</a></li>
-        <li><a>Plugins</a></li>
-        <li><a>Add a member</a></li>
-      </ul>
-    </li>
-    <li><a>Invitations</a></li>
-    <li><a>Cloud Storage Environment Settings</a></li>
-    <li><a>Authentication</a></li>
-  </ul>
-  <p class="menu-label">
-    Transactions
-  </p>
-  <ul class="menu-list">
-    <li><a>Payments</a></li>
-    <li><a>Transfers</a></li>
-    <li><a>Balance</a></li>
-  </ul>
+  <ng-container *ngFor="let item of items | keyvalue">
+    <p class="menu-label">
+      {{ item.key }}
+    </p>
+    <ul class="menu-list" *ngIf="item.value | keyvalue">
+      <li *ngFor="let item2 of item.value | keyvalue">
+        <a>{{ item2.key }}</a>
+        <ul *ngIf="item2.value | keyvalue">
+          <li *ngFor="let item3 of item2.value | keyvalue">
+            <a>{{ item3.key }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </ng-container>
 </aside>

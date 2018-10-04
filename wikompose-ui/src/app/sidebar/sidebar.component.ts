@@ -7,4 +7,22 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
+  public items = {
+    'todo': {},
+    'projects': {
+      'perso': {
+        'wikompose': {},
+        'other': {}
+      },
+      'pro': {
+        'hidden': {},
+        'nope': {}
+      }
+    },
+    'other': {
+      'other1': {},
+      'other2': {}
+    }
+  };
+
 }

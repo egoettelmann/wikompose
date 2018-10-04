@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.scss",
               "node_modules/bulma/css/bulma.min.css",
               "node_modules/prismjs/themes/prism-dark.css"
             ],
