@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { FileService } from './services/file.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
       loader: HttpClient
     })
   ],
-  providers: [],
+  providers: [
+    FileService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

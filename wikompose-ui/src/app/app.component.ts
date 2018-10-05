@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
+import { FileService } from './services/file.service';
 
 @Component({
   selector: 'app-root',
@@ -8,22 +8,21 @@ import { ElectronService } from 'ngx-electron';
 })
 export class AppComponent implements OnInit {
 
-  public fileToLoad = 'assets/test.md';
+  public fileContent;
   public files = {};
 
-  constructor(private electronService: ElectronService) {
+  constructor(private fileService: FileService) {
   }
 
   ngOnInit(): void {
-    this.electronService.ipcRenderer.on('ui/routes', (event, arg) => {
-      console.log(arg);
-      this.files = arg;
+    this.fileService.getFileTree().subscribe(fileTree => {
+      console.log('fileTree', fileTree);
+      this.files = fileTree;
     });
-    this.electronService.ipcRenderer.on('ui/content', (event, arg) => {
-      console.log(arg);
+    this.fileService.getContent(['test']).subscribe(content => {
+      console.log('content', content);
+      this.fileContent = content;
     });
-    this.electronService.ipcRenderer.send('main/routes', {});
-    this.electronService.ipcRenderer.send('main/content', ['admin']);
   }
 
 }
