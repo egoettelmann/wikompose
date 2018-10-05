@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'wk-sidebar',
@@ -7,22 +7,6 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
-  public items = {
-    'todo': {},
-    'projects': {
-      'perso': {
-        'wikompose': {},
-        'other': {}
-      },
-      'pro': {
-        'hidden': {},
-        'nope': {}
-      }
-    },
-    'other': {
-      'other1': {},
-      'other2': {}
-    }
-  };
+  @Input() public items: any;
 
 }

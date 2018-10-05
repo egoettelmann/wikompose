@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import { FileManagementService } from './services/file-management.service';
 
 let win: BrowserWindow;
 
@@ -20,8 +21,22 @@ function createWindow() {
     })
   );
 
+  // Loading the files
+  ipcMain.on('main/routes', function (event: any, arg: any) {
+    const files = FileManagementService.getFileTree();
+    console.log(arg, JSON.stringify(files));
+    event.sender.send('ui/routes', files);
+  });
+
+  // Loading the content
+  ipcMain.on('main/content', function (event: any, arg: any) {
+    const content = FileManagementService.getFileContent(arg);
+    console.log(arg, content);
+    event.sender.send('ui/content', content);
+  });
+
   // The following is optional and will open the DevTools:
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null;

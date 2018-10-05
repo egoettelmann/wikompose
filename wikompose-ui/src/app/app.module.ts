@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { NgxElectronModule } from 'ngx-electron';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { MarkdownModule } from 'ngx-markdown';
@@ -16,6 +17,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    NgxElectronModule,
     MarkdownModule.forRoot({
       loader: HttpClient
     })
