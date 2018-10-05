@@ -19,7 +19,11 @@ export class AppComponent implements OnInit {
       console.log(arg);
       this.files = arg;
     });
+    this.electronService.ipcRenderer.on('ui/content', (event, arg) => {
+      console.log(arg);
+    });
     this.electronService.ipcRenderer.send('main/routes', {});
+    this.electronService.ipcRenderer.send('main/content', ['admin']);
   }
 
 }

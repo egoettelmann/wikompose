@@ -10,9 +10,8 @@ export class FileManagementService {
   }
 
   public static getFileContent(filePath: string[]) {
-    const file = path.join(this.BASE_FOLDER, ...filePath, '.md');
-    console.log('getFileContent', file);
-    return fs.readFileSync(file, 'uft8');
+    const file = path.join(this.BASE_FOLDER, ...filePath) + '.md';
+    return fs.readFileSync(file, 'utf8');
   }
 
   private static walkSync(dir: string): any {

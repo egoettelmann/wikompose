@@ -31,7 +31,6 @@ function createWindow() {
   // Loading the content
   ipcMain.on('main/content', function (event: any, arg: any) {
     const content = FileManagementService.getFileContent(arg);
-    console.log(arg, content);
     event.sender.send('ui/content', content);
   });
 
