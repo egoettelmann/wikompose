@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FileService } from './services/file.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,10 @@ import { FileService } from './services/file.service';
 })
 export class AppComponent implements OnInit {
 
-  public fileContent;
   public files = {};
 
-  constructor(private fileService: FileService,
+  constructor(private router: Router,
+              private fileService: FileService,
               private ref: ChangeDetectorRef) {
   }
 
@@ -20,17 +21,7 @@ export class AppComponent implements OnInit {
       this.files = fileTree;
       this.ref.detectChanges();
     });
-    this.fileService.getContent(['notes']).subscribe(content => {
-      this.fileContent = content;
-      this.ref.detectChanges();
-    });
-  }
-
-  public loadFile(filePath: string[]) {
-    this.fileService.getContent(filePath).subscribe(content => {
-      this.fileContent = content;
-      this.ref.detectChanges();
-    });
+    this.router.navigate(['/content'], { queryParams: { file: ['notes'] } });
   }
 
 }

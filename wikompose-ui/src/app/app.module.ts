@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxElectronModule } from 'ngx-electron';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { MarkdownModule } from 'ngx-markdown';
-import { NavigationComponent } from './navigation/navigation.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FileService } from './services/file.service';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,9 +19,7 @@ import { FileService } from './services/file.service';
     BrowserModule,
     HttpClientModule,
     NgxElectronModule,
-    MarkdownModule.forRoot({
-      loader: HttpClient
-    })
+    AppRoutingModule
   ],
   providers: [
     FileService
