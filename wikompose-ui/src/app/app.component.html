@@ -1,7 +1,7 @@
 <section class="section main-container">
   <div class="columns">
     <div class="column is-2">
-      <wk-sidebar [items]="files"></wk-sidebar>
+      <wk-sidebar [items]="files" (select)="loadFile($event)"></wk-sidebar>
     </div>
     <div class="column is-10">
       <markdown [data]="fileContent"></markdown>

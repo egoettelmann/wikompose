@@ -1,8 +1,8 @@
 {
   "home": null,
-  "test": {
-    "test1": null,
-    "test2": null
+  "folder": {
+    "file1": null,
+    "file2": null
   },
   "other": {
     "other1": {
@@ -15,5 +15,5 @@
       "other23": null
     }
   },
-  "more": null
+  "notes": null
 }

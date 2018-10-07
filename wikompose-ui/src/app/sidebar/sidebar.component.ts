@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'wk-sidebar',
@@ -8,5 +8,11 @@ import { Component, Input } from '@angular/core';
 export class SidebarComponent {
 
   @Input() public items: any;
+  @Input() public currentItem: any;
+  @Output() public select = new EventEmitter<string[]>();
+
+  public selectFile(filePath: string[]) {
+    this.select.emit(filePath);
+  }
 
 }

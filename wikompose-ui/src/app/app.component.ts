@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FileService } from './services/file.service';
 
 @Component({
@@ -11,17 +11,25 @@ export class AppComponent implements OnInit {
   public fileContent;
   public files = {};
 
-  constructor(private fileService: FileService) {
+  constructor(private fileService: FileService,
+              private ref: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.fileService.getFileTree().subscribe(fileTree => {
-      console.log('fileTree', fileTree);
       this.files = fileTree;
+      this.ref.detectChanges();
     });
-    this.fileService.getContent(['test']).subscribe(content => {
-      console.log('content', content);
+    this.fileService.getContent(['notes']).subscribe(content => {
       this.fileContent = content;
+      this.ref.detectChanges();
+    });
+  }
+
+  public loadFile(filePath: string[]) {
+    this.fileService.getContent(filePath).subscribe(content => {
+      this.fileContent = content;
+      this.ref.detectChanges();
     });
   }
 

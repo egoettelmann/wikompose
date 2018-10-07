@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { HttpClient } from '@angular/common/http';
-import { bindCallback, Observable } from 'rxjs';
+import { bindNodeCallback, Observable } from 'rxjs';
 
 @Injectable()
 export class FileService {
@@ -13,9 +13,13 @@ export class FileService {
 
   public getFileTree(): Observable<any> {
     if (this.electronService.isElectronApp) {
-      const callback = bindCallback(this.electronService.ipcRenderer.on);
-      this.electronService.ipcRenderer.send('main/routes', {});
-      return callback('ui/routes');
+      return Observable.create(observer => {
+        this.electronService.ipcRenderer.on('ui/routes', (event, arg) => {
+          observer.next(arg);
+          observer.complete();
+        });
+        this.electronService.ipcRenderer.send('main/routes', {});
+      });
     } else {
       return this.httpClient.get('./assets/test/file-tree.json');
     }
@@ -23,9 +27,13 @@ export class FileService {
 
   public getContent(filePath: string[]): Observable<any> {
     if (this.electronService.isElectronApp) {
-      const callback = bindCallback(this.electronService.ipcRenderer.on);
-      this.electronService.ipcRenderer.send('main/content', filePath);
-      return callback('ui/content');
+      return Observable.create(observer => {
+        this.electronService.ipcRenderer.on('ui/content', (event, arg) => {
+          observer.next(arg);
+          observer.complete();
+        });
+        this.electronService.ipcRenderer.send('main/content', filePath);
+      });
     } else {
       return this.httpClient.get('./assets/test/content/' + filePath.join('/') + '.md', { responseType: 'text' });
     }
