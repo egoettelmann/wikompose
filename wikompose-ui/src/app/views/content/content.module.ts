@@ -2,13 +2,21 @@ import { NgModule } from '@angular/core';
 import { ContentComponent } from './content.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { ContentRoutingModule } from './content-routing.module';
+import { FormsModule } from '@angular/forms';
+import { EditContentComponent } from './edit/edit-content.component';
+import { ViewContentComponent } from './view/view-content.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    ContentComponent
+    ContentComponent,
+    EditContentComponent,
+    ViewContentComponent
   ],
   imports: [
     ContentRoutingModule,
+    CommonModule,
+    FormsModule,
     MarkdownModule.forRoot()
   ]
 })

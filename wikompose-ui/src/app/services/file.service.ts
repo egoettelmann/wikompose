@@ -2,13 +2,19 @@ import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { HttpClient } from '@angular/common/http';
 import { bindNodeCallback, Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
 @Injectable()
-export class FileService {
+export class FileService implements Resolve<string> {
 
   constructor(private electronService: ElectronService,
               private httpClient: HttpClient
   ) {
+  }
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string> {
+    const filePath = route.queryParamMap.getAll('file');
+    return this.getContent(filePath);
   }
 
   public getFileTree(): Observable<any> {

@@ -1,1 +1,5 @@
-<markdown [data]="fileContent"></markdown>
+<div class="is-pulled-right">
+  <a *ngIf="!isEditMode()" [routerLink]="['./edit']" [queryParamsHandling]="'merge'">Edit</a>
+  <a *ngIf="isEditMode()" [routerLink]="['./view']" [queryParamsHandling]="'merge'">View</a>
+</div>
+<router-outlet></router-outlet>

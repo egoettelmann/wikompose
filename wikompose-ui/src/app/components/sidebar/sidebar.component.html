@@ -1,7 +1,7 @@
 <aside class="menu">
   <ng-container *ngFor="let item of items | keyvalue">
     <p class="menu-label">
-      <a [routerLink]="['/content']"
+      <a [routerLink]="['/content/view']"
          [queryParams]="{ file: [item.key] }"
          [routerLinkActive]="'is-active'">
         {{ item.key }}
@@ -9,14 +9,14 @@
     </p>
     <ul class="menu-list" *ngIf="item.value | keyvalue">
       <li *ngFor="let item2 of item.value | keyvalue">
-        <a [routerLink]="['/content']"
+        <a [routerLink]="['/content/view']"
            [queryParams]="{ file: [item.key, item2.key] }"
            [routerLinkActive]="'is-active'">
           {{ item2.key }}
         </a>
         <ul *ngIf="item2.value | keyvalue">
           <li *ngFor="let item3 of item2.value | keyvalue">
-            <a [routerLink]="['/content']"
+            <a [routerLink]="['/content/view']"
                [queryParams]="{ file: [item.key, item2.key, item3.key] }"
                [routerLinkActive]="'is-active'">
               {{ item3.key }}
