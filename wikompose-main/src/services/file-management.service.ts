@@ -3,7 +3,7 @@ import * as path from 'path';
 
 export class FileManagementService {
 
-  private static BASE_FOLDER = '';
+  private static BASE_FOLDER = '../wikompose-ui/src/assets/test/content';
 
   public static getFileTree() {
     return this.walkSync(this.BASE_FOLDER);
@@ -12,6 +12,11 @@ export class FileManagementService {
   public static getFileContent(filePath: string[]) {
     const file = path.join(this.BASE_FOLDER, ...filePath) + '.md';
     return fs.readFileSync(file, 'utf8');
+  }
+
+  public static saveFileContent(filePath: string[], fileContent: string) {
+    const file = path.join(this.BASE_FOLDER, ...filePath) + '.md';
+    fs.writeFileSync(file, fileContent, 'utf8');
   }
 
   private static walkSync(dir: string): any {

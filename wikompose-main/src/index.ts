@@ -22,16 +22,22 @@ function createWindow() {
   );
 
   // Loading the files
-  ipcMain.on('main/routes', function (event: any, arg: any) {
+  ipcMain.on('main:get//routes', function (event: any, arg: any) {
     const files = FileManagementService.getFileTree();
     console.log(arg, JSON.stringify(files));
-    event.sender.send('ui/routes', files);
+    event.sender.send('ui:get//routes', files);
   });
 
   // Loading the content
-  ipcMain.on('main/content', function (event: any, arg: any) {
+  ipcMain.on('main:get//content', function (event: any, arg: any) {
     const content = FileManagementService.getFileContent(arg);
-    event.sender.send('ui/content', content);
+    event.sender.send('ui:get//content', content);
+  });
+
+  // Writing the content
+  ipcMain.on('main:post//content', function (event: any, arg: any) {
+    const content = FileManagementService.saveFileContent(arg.filePath, arg.fileContent);
+    event.sender.send('ui:post//content', content);
   });
 
   // The following is optional and will open the DevTools:

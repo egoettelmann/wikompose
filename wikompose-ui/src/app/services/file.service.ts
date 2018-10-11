@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { HttpClient } from '@angular/common/http';
-import { bindNodeCallback, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 
 @Injectable()
@@ -20,11 +20,11 @@ export class FileService implements Resolve<string> {
   public getFileTree(): Observable<any> {
     if (this.electronService.isElectronApp) {
       return Observable.create(observer => {
-        this.electronService.ipcRenderer.on('ui/routes', (event, arg) => {
+        this.electronService.ipcRenderer.once('ui:get//routes', (event, arg) => {
           observer.next(arg);
           observer.complete();
         });
-        this.electronService.ipcRenderer.send('main/routes', {});
+        this.electronService.ipcRenderer.send('main:get//routes', {});
       });
     } else {
       return this.httpClient.get('./assets/test/file-tree.json');
@@ -34,14 +34,28 @@ export class FileService implements Resolve<string> {
   public getContent(filePath: string[]): Observable<any> {
     if (this.electronService.isElectronApp) {
       return Observable.create(observer => {
-        this.electronService.ipcRenderer.on('ui/content', (event, arg) => {
+        this.electronService.ipcRenderer.once('ui:get//content', (event, arg) => {
           observer.next(arg);
           observer.complete();
         });
-        this.electronService.ipcRenderer.send('main/content', filePath);
+        this.electronService.ipcRenderer.send('main:get//content', filePath);
       });
     } else {
       return this.httpClient.get('./assets/test/content/' + filePath.join('/') + '.md', { responseType: 'text' });
+    }
+  }
+
+  public saveContent(filePath: string[], fileContent: string): Observable<any> {
+    if (this.electronService.isElectronApp) {
+      return Observable.create(observer => {
+        this.electronService.ipcRenderer.once('ui:post//content', (event, arg) => {
+          observer.next(arg);
+          observer.complete();
+        });
+        this.electronService.ipcRenderer.send('main:post//content', { filePath: filePath, fileContent: fileContent });
+      });
+    } else {
+      return this.httpClient.post('./assets/test/content/' + filePath.join('/') + '.md', fileContent);
     }
   }
 

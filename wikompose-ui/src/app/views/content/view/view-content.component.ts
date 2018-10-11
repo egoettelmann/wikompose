@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewContentComponent implements OnInit {
 
-  public fileContent;
+  public fileContent: string;
 
   constructor(private route: ActivatedRoute,
               private ref: ChangeDetectorRef) {
@@ -16,7 +16,6 @@ export class ViewContentComponent implements OnInit {
   ngOnInit(): void {
     this.route.parent.data.subscribe(data => {
       this.fileContent = data.file;
-      console.log('view-content', data.file);
       this.ref.detectChanges();
     });
   }

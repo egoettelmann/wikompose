@@ -1,1 +1,6 @@
-<textarea class="textarea" [(ngModel)]="fileContent"></textarea>
+<ace-editor [(text)]="fileContent"
+            [mode]="'markdown'"
+            [durationBeforeCallback]="200"
+            (textChanged)="updateContent($event)"
+            style="height: 100%; width:100%; overflow: auto;">
+</ace-editor>

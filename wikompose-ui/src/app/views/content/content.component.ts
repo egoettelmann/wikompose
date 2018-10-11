@@ -11,10 +11,13 @@ export class ContentComponent {
   }
 
   public isEditMode() {
-    const childUrl = this.route.snapshot.firstChild.url;
-    if (childUrl.length > 0) {
-      return childUrl[0].path === 'edit';
+    if (this.route.snapshot.firstChild) {
+      const childUrl = this.route.snapshot.firstChild.url;
+      if (childUrl.length > 0) {
+        return childUrl[0].path === 'edit';
+      }
     }
+    return false;
   }
 
 }

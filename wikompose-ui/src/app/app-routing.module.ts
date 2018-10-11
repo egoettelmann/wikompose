@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(AppRoutingModule.ROUTES)
+    RouterModule.forRoot(AppRoutingModule.ROUTES, { useHash: true })
   ],
   exports: [
     RouterModule

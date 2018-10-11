@@ -1,5 +1,5 @@
-<div class="is-pulled-right">
+<router-outlet></router-outlet>
+<div class="is-pulled-left">
   <a *ngIf="!isEditMode()" [routerLink]="['./edit']" [queryParamsHandling]="'merge'">Edit</a>
   <a *ngIf="isEditMode()" [routerLink]="['./view']" [queryParamsHandling]="'merge'">View</a>
 </div>
-<router-outlet></router-outlet>
