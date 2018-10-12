@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FileService } from './services/file.service';
 import { Router } from '@angular/router';
 
@@ -12,16 +12,14 @@ export class AppComponent implements OnInit {
   public files = {};
 
   constructor(private router: Router,
-              private fileService: FileService,
-              private ref: ChangeDetectorRef) {
+              private fileService: FileService) {
   }
 
   ngOnInit(): void {
     this.fileService.getFileTree().subscribe(fileTree => {
       this.files = fileTree;
-      this.ref.detectChanges();
     });
-    this.router.navigate(['/content'], { queryParams: { file: ['notes'] } });
+    this.router.navigate(['/content/view'], { queryParams: { file: ['notes'] } });
   }
 
 }

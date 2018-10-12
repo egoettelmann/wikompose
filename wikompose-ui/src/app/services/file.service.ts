@@ -52,7 +52,7 @@ export class FileService implements Resolve<string> {
           observer.next(arg);
           observer.complete();
         });
-        this.electronService.ipcRenderer.send('main:post//content', { filePath: filePath, fileContent: fileContent });
+        this.electronService.ipcRenderer.send('main:post//content', { path: filePath, content: fileContent });
       });
     } else {
       return this.httpClient.post('./assets/test/content/' + filePath.join('/') + '.md', fileContent);

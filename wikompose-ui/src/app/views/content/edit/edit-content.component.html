@@ -1,4 +1,4 @@
-<ace-editor [(text)]="fileContent"
+<ace-editor [(text)]="file.content"
             [mode]="'markdown'"
             [durationBeforeCallback]="200"
             (textChanged)="updateContent($event)"

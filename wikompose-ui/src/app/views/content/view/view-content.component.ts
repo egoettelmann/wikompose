@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -7,16 +7,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewContentComponent implements OnInit {
 
-  public fileContent: string;
+  public file: { path: string, content: string };
 
-  constructor(private route: ActivatedRoute,
-              private ref: ChangeDetectorRef) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.route.parent.data.subscribe(data => {
-      this.fileContent = data.file;
-      this.ref.detectChanges();
+      this.file = data.file;
     });
   }
 

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'brace/mode/markdown';
 import { FileService } from '../../../services/file.service';
@@ -9,24 +9,20 @@ import { FileService } from '../../../services/file.service';
 })
 export class EditContentComponent implements OnInit {
 
-  public fileContent: string;
-  private filePath : string[];
+  public file: { path: string[], content: string };
 
   constructor(private route: ActivatedRoute,
-              private fileService: FileService,
-              private ref: ChangeDetectorRef) {
+              private fileService: FileService) {
   }
 
   ngOnInit(): void {
-    this.filePath = this.route.snapshot.queryParamMap.getAll('file');
     this.route.parent.data.subscribe(data => {
-      this.fileContent = data.file;
-      this.ref.detectChanges();
+      this.file = data.file;
     });
   }
 
   updateContent(newContent: string) {
-    this.fileService.saveContent(this.filePath, newContent).subscribe(() => {
+    this.fileService.saveContent(this.file.path, newContent).subscribe(() => {
       console.log('ok');
     });
   }
