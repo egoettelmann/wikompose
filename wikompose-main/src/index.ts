@@ -2,6 +2,8 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import { FileManagementService } from './services/file-management.service';
+import { ConfigurationApiService } from './api/configuration-api.service';
+import { FilesApiService } from './api/files-api.service';
 
 let win: BrowserWindow;
 
@@ -21,24 +23,12 @@ function createWindow() {
     })
   );
 
-  // Loading the files
-  ipcMain.on('main:get//routes', function (event: any, arg: any) {
-    const files = FileManagementService.getFileTree();
-    console.log(arg, JSON.stringify(files));
-    event.sender.send('ui:get//routes', files);
-  });
+  // Instantiating services
+  const fileManagementService = new FileManagementService('../wikompose-ui/src/assets/test/content');
 
-  // Loading the content
-  ipcMain.on('main:get//content', function (event: any, arg: any) {
-    const content = FileManagementService.getFileContent(arg);
-    event.sender.send('ui:get//content', content);
-  });
-
-  // Writing the content
-  ipcMain.on('main:post//content', function (event: any, arg: any) {
-    const content = FileManagementService.saveFileContent(arg.filePath, arg.fileContent);
-    event.sender.send('ui:post//content', content);
-  });
+  // Registering routes
+  new ConfigurationApiService(fileManagementService).register();
+  new FilesApiService(fileManagementService).register();
 
   // The following is optional and will open the DevTools:
   win.webContents.openDevTools();
