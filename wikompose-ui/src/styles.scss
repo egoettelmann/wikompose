@@ -1,3 +1,11 @@
+html,
+body,
+.main-container,
+.main-container > .columns,
+.view-container {
+  height: 100%;
+}
+
 /* Markdown sections specific styles */
 markdown {
   h1 {

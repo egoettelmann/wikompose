@@ -3,6 +3,7 @@ import { ElectronService } from 'ngx-electron';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class FileService implements Resolve<string> {
@@ -41,7 +42,15 @@ export class FileService implements Resolve<string> {
         this.electronService.ipcRenderer.send('main:get//content', filePath);
       });
     } else {
-      return this.httpClient.get('./assets/test/content/' + filePath.join('/') + '.md', { responseType: 'text' });
+      return this.httpClient.get('./assets/test/content/' + filePath.join('/') + '.md', { responseType: 'text' })
+        .pipe(
+          map(content => {
+            return {
+              path: filePath,
+              content: content
+            };
+          })
+        );
     }
   }
 

@@ -1,5 +1,18 @@
 <router-outlet></router-outlet>
-<div class="is-pulled-left">
-  <a *ngIf="!isEditMode()" [routerLink]="['./edit']" [queryParamsHandling]="'merge'">Edit</a>
-  <a *ngIf="isEditMode()" [routerLink]="['./view']" [queryParamsHandling]="'merge'">View</a>
+
+<div class="tabs is-toggle">
+  <ul>
+    <li [ngClass]="{ 'is-active': !isEditMode() }">
+      <a [routerLink]="['./view']" [queryParamsHandling]="'merge'">
+        <span class="icon is-small"><i class="fas fa-eye"></i></span>
+        <span>View</span>
+      </a>
+    </li>
+    <li [ngClass]="{ 'is-active': isEditMode() }">
+      <a [routerLink]="['./edit']" [queryParamsHandling]="'merge'">
+        <span class="icon is-small"><i class="fas fa-edit"></i></span>
+        <span>Edit</span>
+      </a>
+    </li>
+  </ul>
 </div>
