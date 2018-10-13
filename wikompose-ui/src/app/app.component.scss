@@ -1,3 +1,8 @@
 .section.main-container {
-  padding: 1rem;
+  padding: 0;
+  background-color: #fafbfc;
+
+  .column {
+    padding-bottom: 0;
+  }
 }

@@ -1,18 +1,16 @@
-<router-outlet></router-outlet>
+<div class="content-wrapper">
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
 
-<div class="tabs is-toggle">
-  <ul>
-    <li [ngClass]="{ 'is-active': !isEditMode() }">
-      <a [routerLink]="['./view']" [queryParamsHandling]="'merge'">
-        <span class="icon is-small"><i class="fas fa-eye"></i></span>
-        <span>View</span>
-      </a>
-    </li>
-    <li [ngClass]="{ 'is-active': isEditMode() }">
-      <a [routerLink]="['./edit']" [queryParamsHandling]="'merge'">
-        <span class="icon is-small"><i class="fas fa-edit"></i></span>
-        <span>Edit</span>
-      </a>
-    </li>
-  </ul>
+  <div class="content-footer">
+    <a [routerLink]="['./view']" [queryParamsHandling]="'merge'" [ngClass]="{ 'is-active': !isEditMode() }">
+      <span class="icon is-small"><i class="fas fa-eye"></i></span>
+      <span>View</span>
+    </a>
+    <a [routerLink]="['./edit']" [queryParamsHandling]="'merge'" [ngClass]="{ 'is-active': isEditMode() }">
+      <span class="icon is-small"><i class="fas fa-edit"></i></span>
+      <span>Edit</span>
+    </a>
+  </div>
 </div>

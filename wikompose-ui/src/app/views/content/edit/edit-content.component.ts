@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import 'brace/mode/markdown';
+import 'brace/theme/github';
 import { FileService } from '../../../services/file.service';
 
 @Component({

@@ -1,5 +1,6 @@
 <ace-editor [(text)]="file.content"
             [mode]="'markdown'"
+            [theme]="'github'"
             [durationBeforeCallback]="200"
             (textChanged)="updateContent($event)"
             style="height: 100%; width:100%; overflow: auto;">

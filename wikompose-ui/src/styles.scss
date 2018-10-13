@@ -1,9 +1,5 @@
-html,
-body,
-.main-container,
-.main-container > .columns,
-.view-container {
-  height: 100%;
+html {
+  overflow-y: hidden !important;
 }
 
 /* Markdown sections specific styles */
