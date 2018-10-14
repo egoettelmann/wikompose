@@ -4,6 +4,7 @@ import * as url from 'url';
 import { FileManagementService } from './services/file-management.service';
 import { ConfigurationApiService } from './api/configuration-api.service';
 import { FilesApiService } from './api/files-api.service';
+import { ConfigurationService } from './services/configuration.service';
 
 let win: BrowserWindow;
 
@@ -25,9 +26,10 @@ function createWindow() {
 
   // Instantiating services
   const fileManagementService = new FileManagementService('../wikompose-ui/src/assets/test/content');
+  const configurationService = new ConfigurationService();
 
   // Registering routes
-  new ConfigurationApiService(fileManagementService).register();
+  new ConfigurationApiService(fileManagementService, configurationService).register();
   new FilesApiService(fileManagementService).register();
 
   // The following is optional and will open the DevTools:

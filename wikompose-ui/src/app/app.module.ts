@@ -9,6 +9,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FileService } from './services/file.service';
 import { AppRoutingModule } from './app-routing.module';
 import { KeyValuePipe } from '@angular/common';
+import { ConfigurationService } from './services/configuration.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { KeyValuePipe } from '@angular/common';
   ],
   providers: [
     FileService,
+    ConfigurationService,
     KeyValuePipe
   ],
   bootstrap: [AppComponent]

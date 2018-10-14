@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
     "noImplicitAny": true,
     "sourceMap": true,
     "outDir": "dist",
@@ -8,7 +7,10 @@
     "paths": {
       "*": ["node_modules/*"]
     },
-    "target": "es5"
+    "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6"
   },
   "include": [
     "src/**/*"
