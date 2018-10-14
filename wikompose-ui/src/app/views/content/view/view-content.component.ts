@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+declare var Prism: any;
+
 @Component({
   templateUrl: './view-content.component.html',
   styleUrls: ['./view-content.component.scss']
@@ -10,6 +12,9 @@ export class ViewContentComponent implements OnInit {
   public file: { path: string, content: string };
 
   constructor(private route: ActivatedRoute) {
+    if (Prism !== undefined) {
+      Prism.plugins.customClass.prefix('prism--');
+    }
   }
 
   ngOnInit(): void {

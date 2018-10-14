@@ -24,19 +24,24 @@
             ],
             "styles": [
               "src/styles.scss",
+              "src/prism.scss",
               "node_modules/bulma/css/bulma.min.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-              "node_modules/prismjs/themes/prism-dark.css"
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": [
               "node_modules/marked/lib/marked.js",
               "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/custom-class/prism-custom-class.min.js",
               "node_modules/prismjs/components/prism-css.min.js",
               "node_modules/prismjs/components/prism-java.min.js",
               "node_modules/prismjs/components/prism-javascript.min.js",
               "node_modules/prismjs/components/prism-json.min.js",
+              "node_modules/prismjs/components/prism-markdown.min.js",
               "node_modules/prismjs/components/prism-markup.min.js",
-              "node_modules/prismjs/components/prism-typescript.min.js"
+              "node_modules/prismjs/components/prism-python.min.js",
+              "node_modules/prismjs/components/prism-sql.min.js",
+              "node_modules/prismjs/components/prism-typescript.min.js",
+              "node_modules/prismjs/components/prism-yaml.min.js"
             ]
           },
           "configurations": {
