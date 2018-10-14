@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FileService } from '../../../services/file.service';
+import { Subscription } from 'rxjs';
 
 declare var Prism: any;
 
@@ -7,20 +9,31 @@ declare var Prism: any;
   templateUrl: './view-content.component.html',
   styleUrls: ['./view-content.component.scss']
 })
-export class ViewContentComponent implements OnInit {
+export class ViewContentComponent implements OnInit, OnDestroy {
 
   public file: { path: string, content: string };
+  private subscription = new Subscription();
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private fileService: FileService
+  ) {
     if (Prism !== undefined) {
       Prism.plugins.customClass.prefix('prism--');
     }
   }
 
   ngOnInit(): void {
-    this.route.parent.data.subscribe(data => {
-      this.file = data.file;
+    this.subscription = this.route.queryParamMap.subscribe(queryParams => {
+      const rawFilePath = queryParams.get('file');
+      const filePath = FileService.decodeFilePath(rawFilePath);
+      this.fileService.getContent(filePath).subscribe(content => {
+        this.file = content;
+      });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

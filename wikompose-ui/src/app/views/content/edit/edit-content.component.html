@@ -1,4 +1,5 @@
-<ace-editor [(text)]="file.content"
+<ace-editor *ngIf="file"
+            [(text)]="file.content"
             [mode]="'markdown'"
             [theme]="'github'"
             [durationBeforeCallback]="200"

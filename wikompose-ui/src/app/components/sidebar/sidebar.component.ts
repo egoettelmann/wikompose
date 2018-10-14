@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
+import { FileService } from '../../services/file.service';
 
 @Component({
   selector: 'wk-sidebar',
@@ -23,6 +24,12 @@ export class SidebarComponent implements OnChanges {
 
   hasItems(item: any) {
     return item.value !== null && item.value.length > 0;
+  }
+
+  getQueryParam(filePath: string[]) {
+    return {
+      file: FileService.encodeFilePath(filePath)
+    };
   }
 
   private unwrap(items: any): any[] {

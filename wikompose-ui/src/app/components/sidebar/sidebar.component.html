@@ -2,7 +2,7 @@
   <ul class="sidebar-container" *ngIf="sortedItems">
     <li class="sidebar-item" *ngFor="let item of sortedItems">
       <a [routerLink]="['/content/view']"
-         [queryParams]="{ file: [item.key] }"
+         [queryParams]="getQueryParam([item.key])"
          [routerLinkActive]="'is-active'"
          class="sidebar-item-link">
         <span class="icon is-small" *ngIf="hasItems(item)"><i class="fas fa-folder"></i></span>
@@ -12,7 +12,7 @@
       <ul class="sidebar-container" *ngIf="hasItems(item)">
         <li class="sidebar-item" *ngFor="let item2 of item.value">
           <a [routerLink]="['/content/view']"
-             [queryParams]="{ file: [item.key, item2.key] }"
+             [queryParams]="getQueryParam([item.key, item2.key])"
              [routerLinkActive]="'is-active'"
              class="sidebar-item-link">
             <span class="icon is-small" *ngIf="hasItems(item2)"><i class="fas fa-folder"></i></span>
@@ -22,7 +22,7 @@
           <ul class="sidebar-container" *ngIf="hasItems(item2)">
             <li class="sidebar-item" *ngFor="let item3 of item2.value">
               <a [routerLink]="['/content/view']"
-                 [queryParams]="{ file: [item.key, item2.key, item3.key] }"
+                 [queryParams]="getQueryParam([item.key, item2.key, item3.key])"
                  [routerLinkActive]="'is-active'"
                  class="sidebar-item-link">
                 <span class="icon is-small"><i class="fas fa-file"></i></span>

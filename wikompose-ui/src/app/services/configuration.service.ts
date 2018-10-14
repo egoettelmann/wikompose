@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ElectronService } from 'ngx-electron';
 import { HttpClient } from '@angular/common/http';
@@ -7,7 +7,8 @@ import { HttpClient } from '@angular/common/http';
 export class ConfigurationService {
 
   constructor(private electronService: ElectronService,
-              private httpClient: HttpClient
+              private httpClient: HttpClient,
+              private applicationRef: ApplicationRef
   ) {
   }
 
@@ -17,6 +18,7 @@ export class ConfigurationService {
         this.electronService.ipcRenderer.once('ui:get//config', (event, arg) => {
           observer.next(arg);
           observer.complete();
+          this.applicationRef.tick();
         });
         this.electronService.ipcRenderer.send('main:get//config', {});
       });
@@ -31,6 +33,7 @@ export class ConfigurationService {
         this.electronService.ipcRenderer.once('ui:get//settings/config', (event, arg) => {
           observer.next(arg);
           observer.complete();
+          this.applicationRef.tick();
         });
         this.electronService.ipcRenderer.send('main:get//settings/config', {});
       });
@@ -45,6 +48,7 @@ export class ConfigurationService {
         this.electronService.ipcRenderer.once('ui:post//settings/config', (event, arg) => {
           observer.next(arg);
           observer.complete();
+          this.applicationRef.tick();
         });
         this.electronService.ipcRenderer.send('main:post//settings/config', {
           property: property,

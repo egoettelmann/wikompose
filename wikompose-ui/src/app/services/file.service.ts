@@ -1,21 +1,24 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, Injectable } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { map } from 'rxjs/operators';
 
 @Injectable()
-export class FileService implements Resolve<string> {
+export class FileService {
 
   constructor(private electronService: ElectronService,
-              private httpClient: HttpClient
+              private httpClient: HttpClient,
+              private applicationRef: ApplicationRef
   ) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string> {
-    const filePath = route.queryParamMap.getAll('file');
-    return this.getContent(filePath);
+  public static encodeFilePath(filePath: string[]): string {
+    return encodeURIComponent(filePath.join(','));
+  }
+
+  public static decodeFilePath(filePath: string): string[] {
+    return decodeURIComponent(filePath).split(',');
   }
 
   public getFileTree(): Observable<any> {
@@ -24,6 +27,7 @@ export class FileService implements Resolve<string> {
         this.electronService.ipcRenderer.once('ui:get//routes', (event, arg) => {
           observer.next(arg);
           observer.complete();
+          this.applicationRef.tick();
         });
         this.electronService.ipcRenderer.send('main:get//routes', {});
       });
@@ -38,6 +42,7 @@ export class FileService implements Resolve<string> {
         this.electronService.ipcRenderer.once('ui:get//content', (event, arg) => {
           observer.next(arg);
           observer.complete();
+          this.applicationRef.tick();
         });
         this.electronService.ipcRenderer.send('main:get//content', filePath);
       });
