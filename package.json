@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "postinstall": "cd wikompose-ui && npm install && cd ../wikompose-main && npm install",
-    "build": "cd wikompose-ui && ng build --base-href ./ --output-path=../wikompose-main/ui && cd ../wikompose-main/ && npm run tsc",
+    "build": "cd wikompose-ui && npm run build -- --base-href ./ --output-path=../wikompose-main/ui && cd ../wikompose-main/ && npm run tsc",
     "start": "npm run build && cd wikompose-main && npm run electron .",
     "package:win": "npm run build && electron-packager ./wikompose-main --no-prune --ignore=/src --out=./bin --platform=win32 --overwrite",
     "package:mac": "npm run build && electron-packager ./wikompose-main --no-prune --ignore=/src --out=./bin --platform=darwin --overwrite"
