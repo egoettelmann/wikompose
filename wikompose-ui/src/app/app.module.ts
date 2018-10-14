@@ -8,6 +8,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FileService } from './services/file.service';
 import { AppRoutingModule } from './app-routing.module';
+import { KeyValuePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
     AppRoutingModule
   ],
   providers: [
-    FileService
+    FileService,
+    KeyValuePipe
   ],
   bootstrap: [AppComponent]
 })

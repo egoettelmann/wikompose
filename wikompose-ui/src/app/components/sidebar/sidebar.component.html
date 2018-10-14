@@ -1,29 +1,37 @@
-<aside class="sidebar menu">
-  <ng-container *ngFor="let item of items | keyvalue">
-    <p class="menu-label">
+<aside class="sidebar">
+  <ul class="sidebar-container" *ngIf="sortedItems">
+    <li class="sidebar-item" *ngFor="let item of sortedItems">
       <a [routerLink]="['/content/view']"
          [queryParams]="{ file: [item.key] }"
-         [routerLinkActive]="'is-active'">
-        {{ item.key }}
+         [routerLinkActive]="'is-active'"
+         class="sidebar-item-link">
+        <span class="icon is-small" *ngIf="hasItems(item)"><i class="fas fa-folder"></i></span>
+        <span class="icon is-small" *ngIf="!hasItems(item)"><i class="fas fa-file"></i></span>
+        <span>{{ item.key }}</span>
       </a>
-    </p>
-    <ul class="menu-list" *ngIf="item.value | keyvalue">
-      <li *ngFor="let item2 of item.value | keyvalue">
-        <a [routerLink]="['/content/view']"
-           [queryParams]="{ file: [item.key, item2.key] }"
-           [routerLinkActive]="'is-active'">
-          {{ item2.key }}
-        </a>
-        <ul *ngIf="item2.value | keyvalue">
-          <li *ngFor="let item3 of item2.value | keyvalue">
-            <a [routerLink]="['/content/view']"
-               [queryParams]="{ file: [item.key, item2.key, item3.key] }"
-               [routerLinkActive]="'is-active'">
-              {{ item3.key }}
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </ng-container>
+      <ul class="sidebar-container" *ngIf="hasItems(item)">
+        <li class="sidebar-item" *ngFor="let item2 of item.value">
+          <a [routerLink]="['/content/view']"
+             [queryParams]="{ file: [item.key, item2.key] }"
+             [routerLinkActive]="'is-active'"
+             class="sidebar-item-link">
+            <span class="icon is-small" *ngIf="hasItems(item2)"><i class="fas fa-folder"></i></span>
+            <span class="icon is-small" *ngIf="!hasItems(item2)"><i class="fas fa-file"></i></span>
+            <span>{{ item2.key }}</span>
+          </a>
+          <ul class="sidebar-container" *ngIf="hasItems(item2)">
+            <li class="sidebar-item" *ngFor="let item3 of item2.value">
+              <a [routerLink]="['/content/view']"
+                 [queryParams]="{ file: [item.key, item2.key, item3.key] }"
+                 [routerLinkActive]="'is-active'"
+                 class="sidebar-item-link">
+                <span class="icon is-small"><i class="fas fa-file"></i></span>
+                <span>{{ item3.key }}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </aside>

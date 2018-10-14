@@ -6,6 +6,7 @@
     height: 100vh;
     padding-bottom: 2.7rem;
     background-color: white;
+    overflow-y: auto;
   }
 
   .content-footer {
@@ -36,7 +37,6 @@
         border: 1px solid #e1e4e8;
         border-bottom: 3px solid #e36209;
         border-top-color: white;
-        border-radius: 0 0 3px 3px;
         background-color: white;
         color: black;
 
