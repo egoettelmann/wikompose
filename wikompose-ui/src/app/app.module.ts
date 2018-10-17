@@ -10,10 +10,12 @@ import { FileService } from './services/file.service';
 import { AppRoutingModule } from './app-routing.module';
 import { KeyValuePipe } from '@angular/common';
 import { ConfigurationService } from './services/configuration.service';
+import { SettingsComponent } from './views/settings/settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    SettingsComponent,
     NavigationComponent,
     SidebarComponent
   ],
