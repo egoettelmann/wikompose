@@ -1,1 +1,16 @@
-{}
+[
+  {
+    "property": "contentPath",
+    "description": "content_path",
+    "type": "string",
+    "currentValue": "",
+    "defaultValue": ""
+  },
+  {
+    "property": "fileEncoding",
+    "description": "file_encoding",
+    "type": "string",
+    "currentValue": "utf8",
+    "defaultValue": "utf8"
+  }
+]

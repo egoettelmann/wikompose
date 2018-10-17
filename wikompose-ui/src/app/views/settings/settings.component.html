@@ -6,7 +6,15 @@
       <button class="delete" aria-label="close" (click)="close()"></button>
     </header>
     <section class="modal-card-body">
-      <!-- Content ... -->
+      <div *ngFor="let property of configurableProperties" class="field">
+        <label class="label">{{ property.description }}</label>
+        <div class="control">
+          <input class="input"
+                 type="text"
+                 (change)="onValueChange(property.property, $event)"
+                 [value]="property.currentValue">
+        </div>
+      </div>
     </section>
     <footer class="modal-card-foot">
       <button class="button" (click)="close()">Cancel</button>
