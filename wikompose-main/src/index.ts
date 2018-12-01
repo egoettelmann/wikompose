@@ -25,8 +25,9 @@ function createWindow() {
   );
 
   // Instantiating services
-  const fileManagementService = new FileManagementService('../wikompose-ui/src/assets/test/content');
   const configurationService = new ConfigurationService();
+  const contentPath = configurationService.getConfiguration().contentPath;
+  const fileManagementService = new FileManagementService(contentPath);
 
   // Registering routes
   new ConfigurationApiService(fileManagementService, configurationService).register();
