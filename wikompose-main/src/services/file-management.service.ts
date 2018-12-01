@@ -7,6 +7,9 @@ export class FileManagementService {
   }
 
   public getFileTree() {
+    if (!this.baseFolder) {
+      return undefined; // FIXME: throw exception and add exception handler
+    }
     return this.walkSync(this.baseFolder);
   }
 
