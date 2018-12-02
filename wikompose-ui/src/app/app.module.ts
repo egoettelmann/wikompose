@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { KeyValuePipe } from '@angular/common';
 import { ConfigurationService } from './services/configuration.service';
 import { SettingsComponent } from './views/settings/settings.component';
+import { HttpElectronService } from './services/http-electron.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SettingsComponent } from './views/settings/settings.component';
   providers: [
     FileService,
     ConfigurationService,
+    HttpElectronService,
     KeyValuePipe
   ],
   bootstrap: [AppComponent]

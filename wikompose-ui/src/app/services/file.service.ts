@@ -1,15 +1,11 @@
-import { ApplicationRef, Injectable } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpElectronService } from './http-electron.service';
 
 @Injectable()
 export class FileService {
 
-  constructor(private electronService: ElectronService,
-              private httpClient: HttpClient,
-              private applicationRef: ApplicationRef
+  constructor(private httpElectronService: HttpElectronService
   ) {
   }
 
@@ -22,55 +18,21 @@ export class FileService {
   }
 
   public getFileTree(): Observable<any> {
-    if (this.electronService.isElectronApp) {
-      return Observable.create(observer => {
-        this.electronService.ipcRenderer.once('ui:get//routes', (event, arg) => {
-          observer.next(arg);
-          observer.complete();
-          this.applicationRef.tick();
-        });
-        this.electronService.ipcRenderer.send('main:get//routes', {});
-      });
-    } else {
-      return this.httpClient.get('./assets/test/file-tree.json');
-    }
+    return this.httpElectronService.get('routes');
   }
 
   public getContent(filePath: string[]): Observable<any> {
-    if (this.electronService.isElectronApp) {
-      return Observable.create(observer => {
-        this.electronService.ipcRenderer.once('ui:get//content', (event, arg) => {
-          observer.next(arg);
-          observer.complete();
-          this.applicationRef.tick();
-        });
-        this.electronService.ipcRenderer.send('main:get//content', filePath);
-      });
-    } else {
-      return this.httpClient.get('./assets/test/content/' + filePath.join('/') + '.md', { responseType: 'text' })
-        .pipe(
-          map(content => {
-            return {
-              path: filePath,
-              content: content
-            };
-          })
-        );
-    }
+    const httpParams = {
+      path: filePath
+    };
+    return this.httpElectronService.get('content', { params: httpParams });
   }
 
   public saveContent(filePath: string[], fileContent: string): Observable<any> {
-    if (this.electronService.isElectronApp) {
-      return Observable.create(observer => {
-        this.electronService.ipcRenderer.once('ui:post//content', (event, arg) => {
-          observer.next(arg);
-          observer.complete();
-        });
-        this.electronService.ipcRenderer.send('main:post//content', { path: filePath, content: fileContent });
-      });
-    } else {
-      return this.httpClient.post('./assets/test/content/' + filePath.join('/') + '.md', fileContent);
-    }
+    const httpParams = {
+      path: filePath
+    };
+    return this.httpElectronService.post('content', fileContent, { params: httpParams });
   }
 
 }

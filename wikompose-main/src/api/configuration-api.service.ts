@@ -16,29 +16,29 @@ export class ConfigurationApiService {
   }
 
   private registerRoutes() {
-    ipcMain.on('main:get//routes', (event: any, arg: any) => {
+    ipcMain.on('main:get//routes', (event: any, args: any) => {
       const files = this.fileManagementService.getFileTree();
       event.sender.send('ui:get//routes', files);
     });
   }
 
   private registerConfig() {
-    ipcMain.on('main:get//config', (event: any, arg: any) => {
+    ipcMain.on('main:get//config', (event: any, args: any) => {
       const configuration = this.configurationService.getConfiguration();
       event.sender.send('ui:get//config', configuration);
     });
   }
 
   private registerSettingsConfig() {
-    ipcMain.on('main:get//settings/config', (event: any, arg: any) => {
+    ipcMain.on('main:get//settings/config', (event: any, args: any) => {
       const configuration = this.configurationService.getConfigurationWithMetadata();
       event.sender.send('ui:get//settings/config', configuration);
     });
   }
 
   private registerSettingsConfigUpdates() {
-    ipcMain.on('main:post//settings/config', (event: any, arg: any) => {
-      const configuration = this.configurationService.setConfiguration(arg.property, arg.value);
+    ipcMain.on('main:post//settings/config', (event: any, args: any) => {
+      const configuration = this.configurationService.setConfiguration(args.body.property, args.body.value);
       event.sender.send('ui:post//settings/config', configuration);
     });
   }

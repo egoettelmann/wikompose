@@ -18,10 +18,10 @@ export class FilesApiService {
 
   private registerFileRead() {
     // Loading the content
-    ipcMain.on('main:get//content', (event: any, filePath: any) => {
-      const content = this.fileManagementService.getFileContent(filePath);
+    ipcMain.on('main:get//content', (event: any, args: any) => {
+      const content = this.fileManagementService.getFileContent(args.queryParams.path);
       const fileModel: FileModel = {
-        path: filePath,
+        path: args.queryParams.path,
         content: content
       };
       event.sender.send('ui:get//content', fileModel);
@@ -30,8 +30,8 @@ export class FilesApiService {
 
   private registerFileWrite() {
     // Writing the content
-    ipcMain.on('main:post//content', (event: any, arg: FileModel) => {
-      this.fileManagementService.saveFileContent(arg.path, arg.content);
+    ipcMain.on('main:post//content', (event: any, args: any) => {
+      this.fileManagementService.saveFileContent(args.queryParams.path, args.body);
       event.sender.send('ui:post//content', {});
     });
   }
