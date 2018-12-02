@@ -1,10 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import { FileManagementService } from './services/file-management.service';
-import { ConfigurationApiService } from './api/configuration-api.service';
-import { FilesApiService } from './api/files-api.service';
-import { ConfigurationService } from './services/configuration.service';
+import { ElectronRouterService } from './services/electron-router.service';
 
 let win: BrowserWindow;
 
@@ -24,14 +21,9 @@ function createWindow() {
     })
   );
 
-  // Instantiating services
-  const configurationService = new ConfigurationService();
-  const contentPath = configurationService.getConfiguration().contentPath;
-  const fileManagementService = new FileManagementService(contentPath);
-
-  // Registering routes
-  new ConfigurationApiService(fileManagementService, configurationService).register();
-  new FilesApiService(fileManagementService).register();
+  // Initializing router
+  var electronRouterService = new ElectronRouterService(app, true);
+  electronRouterService.init();
 
   // The following is optional and will open the DevTools:
   win.webContents.openDevTools();

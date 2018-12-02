@@ -1,4 +1,5 @@
 import * as express from 'express';
+import { ElectronRouterService } from './services/electron-router.service';
 
 const app = express();
 
@@ -16,10 +17,9 @@ process.argv.forEach((value) => {
   }
 });
 
-// Hello world controller
-app.get('/', function (req, res) {
-  res.send('Hello World!')
-});
+// Initializing router
+var electronRouterService = new ElectronRouterService(app, false);
+electronRouterService.init();
 
 // Starting the app on port defined through options
 app.listen(opts.port, function () {
