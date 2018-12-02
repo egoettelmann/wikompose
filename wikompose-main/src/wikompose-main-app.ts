@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { InversifyContainer, Symbols } from './inversify.config';
-import { Express } from 'express';
+import { Express, Request, Response } from 'express';
 import { App, ipcMain } from 'electron';
 import { Controller, MetadataKeys } from './controllers/router.decorators';
 
@@ -31,24 +31,18 @@ export class WikomposeMainApp {
   }
 
   registerRoute(url: string, method: string, callback: Function) {
+    const methodName = method.toLowerCase();
     if (this.isElectronApp) {
       ipcMain.on('main:' + method.toLowerCase() + '/' + url, (event: any, args: any) => {
+        console.log('Received ' + method + ' request on ' + url);
         event.sender.send('ui:' + method.toLowerCase() + '/' + url, callback(args));
       });
     } else {
-      const expressApp = this.app as Express;
-      switch (method) {
-        case 'POST':
-          expressApp.post(url, function (req, res) {
-            res.send(callback(req));
-          });
-          break;
-        default:
-          expressApp.get(url, (req, res) => {
-            res.send(callback(req));
-          });
-          break;
-      }
+      const expressApp = this.app as any;
+      expressApp[methodName](url, (req: Request, res: Response) => {
+        console.log('Received ' + method + ' request on ' + url);
+        res.send(callback(req));
+      });
     }
   }
 
