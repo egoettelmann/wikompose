@@ -5,12 +5,22 @@ import { injectable } from 'inversify';
 @injectable()
 export class ConfigurationService {
 
+  private static readonly APP_FOLDER = '/wikompose';
+
+  private static readonly CONFIG_FILENAME = '/.config';
+
+  /**
+   * Gets the configuration properties of the application.
+   */
   public getConfiguration(): ConfigurationProperties {
     const parsedConfig = this.getSavedConfiguration();
     const defaultConfig = new ConfigurationProperties();
     return Object.assign({}, defaultConfig, parsedConfig);
   }
 
+  /**
+   * Gets the configurable properties with their metadata (to generate the form).
+   */
   public getConfigurationWithMetadata(): ConfigurationPropertyMetadata[] {
     const properties = ConfigurationPropertiesMetadata.getInstance().getProperties();
     const currentConfiguration = this.getConfiguration() as any;
@@ -22,13 +32,22 @@ export class ConfigurationService {
     return properties;
   }
 
-  public setConfiguration(property: string, value: any) {
+  /**
+   * Updates an existing configuration property.
+   *
+   * @param property the property to update
+   * @param value the new value
+   */
+  public updateConfiguration(property: string, value: any) {
     const savedConfiguration = this.getSavedConfiguration() as any;
     savedConfiguration[property] = value;
     const stringifiedConfig = JSON.stringify(savedConfiguration);
     fs.writeFileSync(this.getConfigurationFilePath(), stringifiedConfig, 'utf8');
   }
 
+  /**
+   * Gets the saved configuration of a user.
+   */
   private getSavedConfiguration(): ConfigurationProperties {
     if (!fs.existsSync(this.getConfigurationFilePath())) {
       fs.mkdirSync(this.getConfigurationFolderPath());
@@ -38,10 +57,16 @@ export class ConfigurationService {
     return JSON.parse(configAsString) as ConfigurationProperties;
   }
 
+  /**
+   * Gets the full path to the saved configuration file.
+   */
   private getConfigurationFilePath() {
-    return this.getConfigurationFolderPath() + '/.config';
+    return this.getConfigurationFolderPath() + ConfigurationService.CONFIG_FILENAME;
   }
 
+  /**
+   * Gets the full path to the saved configuration folder.
+   */
   private getConfigurationFolderPath() {
     let filePath: string;
     if (process.platform === 'darwin') {
@@ -49,7 +74,7 @@ export class ConfigurationService {
     } else {
       filePath = process.env.APPDATA;
     }
-    return filePath + '/wikompose';
+    return filePath + ConfigurationService.APP_FOLDER;
   }
 
 }

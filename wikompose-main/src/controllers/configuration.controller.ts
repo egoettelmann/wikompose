@@ -29,7 +29,7 @@ export class ConfigurationController implements Controller {
 
   @Route('/settings/config', 'POST')
   private updateConfigSettings(args: any) {
-    return this.configurationService.setConfiguration(args.body.property, args.body.value);
+    return this.configurationService.updateConfiguration(args.body.property, args.body.value);
   }
 
 }
