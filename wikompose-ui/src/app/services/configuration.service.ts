@@ -10,11 +10,11 @@ export class ConfigurationService {
   }
 
   public loadConfiguration() {
-    return this.httpElectronService.get('config');
+    return this.httpElectronService.get('/config');
   }
 
   public getConfigurationSettings() {
-    return this.httpElectronService.get('settings/config');
+    return this.httpElectronService.get('/settings/config');
   }
 
   public setConfiguration(property: string, value: any) {
@@ -22,7 +22,7 @@ export class ConfigurationService {
       property: property,
       value: value
     };
-    return this.httpElectronService.post('settings/config', body);
+    return this.httpElectronService.post('/settings/config', body);
   }
 
 }

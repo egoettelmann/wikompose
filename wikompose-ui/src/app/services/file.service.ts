@@ -18,21 +18,24 @@ export class FileService {
   }
 
   public getFileTree(): Observable<any> {
-    return this.httpElectronService.get('routes');
+    return this.httpElectronService.get('/routes');
   }
 
   public getContent(filePath: string[]): Observable<any> {
     const httpParams = {
       path: filePath
     };
-    return this.httpElectronService.get('content', { params: httpParams });
+    return this.httpElectronService.get('/content', { params: httpParams });
   }
 
   public saveContent(filePath: string[], fileContent: string): Observable<any> {
     const httpParams = {
       path: filePath
     };
-    return this.httpElectronService.post('content', fileContent, { params: httpParams });
+    const httpBody = {
+      content: fileContent
+    };
+    return this.httpElectronService.post('/content', httpBody, { params: httpParams });
   }
 
 }

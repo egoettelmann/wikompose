@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgxElectronModule } from 'ngx-electron';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -12,6 +12,7 @@ import { KeyValuePipe } from '@angular/common';
 import { ConfigurationService } from './services/configuration.service';
 import { SettingsComponent } from './views/settings/settings.component';
 import { HttpElectronService } from './services/http-electron.service';
+import { ApiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,12 @@ import { HttpElectronService } from './services/http-electron.service';
     FileService,
     ConfigurationService,
     HttpElectronService,
-    KeyValuePipe
+    KeyValuePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiPrefixInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

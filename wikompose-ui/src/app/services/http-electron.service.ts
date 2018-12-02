@@ -25,13 +25,13 @@ export class HttpElectronService {
   public get(url: string, httpOptions?: any): Observable<any> {
     if (this.electronService.isElectronApp) {
       return Observable.create(observer => {
-        this.electronService.ipcRenderer.once('ui:get//' + url, (event, arg) => {
+        this.electronService.ipcRenderer.once('ui:get/' + url, (event, arg) => {
           this.ngZone.run(() => {
             observer.next(arg);
             observer.complete();
           });
         });
-        this.electronService.ipcRenderer.send('main:get//' + url,
+        this.electronService.ipcRenderer.send('main:get/' + url,
           this.buildElectronArgs(httpOptions)
         );
       });
@@ -50,13 +50,13 @@ export class HttpElectronService {
   public post(url: string, body: any, httpOptions?: any): Observable<any> {
     if (this.electronService.isElectronApp) {
       return Observable.create(observer => {
-        this.electronService.ipcRenderer.once('ui:post//' + url, (event, arg) => {
+        this.electronService.ipcRenderer.once('ui:post/' + url, (event, arg) => {
           this.ngZone.run(() => {
             observer.next(arg);
             observer.complete();
           });
         });
-        this.electronService.ipcRenderer.send('main:post//' + url,
+        this.electronService.ipcRenderer.send('main:post/' + url,
           this.buildElectronArgs(httpOptions, body)
         );
       });
