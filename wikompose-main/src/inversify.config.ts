@@ -1,9 +1,16 @@
-import { Container } from "inversify";
-import { ConfigurationService } from './services/configuration.service';
-import { FileManagementService } from './services/file-management.service';
+import { Container } from 'inversify';
+import { Controller } from './controllers/router.decorators';
+import { ConfigurationController } from './controllers/configuration.controller';
+import { FilesController } from './controllers/files.controller';
 
-const InversifyContainer = new Container();
-InversifyContainer.bind<ConfigurationService>(ConfigurationService).to(ConfigurationService);
-InversifyContainer.bind<FileManagementService>(FileManagementService).to(FileManagementService);
+export const Symbols = {
+  Controller : Symbol.for("Controller")
+};
+
+const InversifyContainer = new Container({ defaultScope: 'Singleton', autoBindInjectable: true });
+
+// Declaring all controllers
+InversifyContainer.bind<Controller>(Symbols.Controller).to(ConfigurationController);
+InversifyContainer.bind<Controller>(Symbols.Controller).to(FilesController);
 
 export { InversifyContainer };
