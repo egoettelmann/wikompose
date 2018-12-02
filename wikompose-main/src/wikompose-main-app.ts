@@ -34,15 +34,16 @@ export class WikomposeMainApp {
     const methodName = method.toLowerCase();
     if (this.isElectronApp) {
       ipcMain.on('main:' + method.toLowerCase() + '/' + url, (event: any, args: any) => {
-        console.log('Received ' + method + ' request on ' + url);
         event.sender.send('ui:' + method.toLowerCase() + '/' + url, callback(args));
       });
     } else {
       const expressApp = this.app as any;
       expressApp[methodName](url, (req: Request, res: Response) => {
-        console.log('Received ' + method + ' request on ' + url);
-        // FIXME: transform request into form { queryParams: any, body: any }
-        res.send(callback(req));
+        const args = {
+          queryParams: req.query,
+          body: req.body
+        };
+        res.send(callback(args));
       });
     }
   }

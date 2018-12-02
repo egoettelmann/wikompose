@@ -18,16 +18,18 @@ export class FilesController {
   @Route('/content')
   private fileContent(args: any) {
     // Loading the content
-    const content = this.fileManagementService.getFileContent(args.queryParams.path);
+    const filePath = Array.isArray(args.queryParams.path) ? args.queryParams.path : [args.queryParams.path];
+    const content = this.fileManagementService.getFileContent(filePath);
     return {
-      path: args.queryParams.path,
+      path: filePath,
       content: content
     } as FileModel;
   }
 
-  @Route('content', 'POST')
+  @Route('/content', 'POST')
   private registerFileWrite(args: any) {
+    const filePath = Array.isArray(args.queryParams.path) ? args.queryParams.path : [args.queryParams.path];
     // Writing the content
-    this.fileManagementService.saveFileContent(args.queryParams.path, args.body);
+    this.fileManagementService.saveFileContent(filePath, args.body.content);
   }
 }

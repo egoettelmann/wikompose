@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import { WikomposeMainApp } from './wikompose-main-app';
+import * as bodyParser from 'body-parser';
 
 const app = express();
 
@@ -10,6 +11,7 @@ const opts: { [key: string]: any } = {
 };
 
 app.use(cors());
+app.use(bodyParser.json());
 
 // Extracting options passed as argument
 process.argv.forEach((value) => {
