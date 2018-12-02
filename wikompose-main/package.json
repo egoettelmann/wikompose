@@ -11,7 +11,9 @@
   },
   "private": true,
   "dependencies": {
-    "electron": "^3.0.2"
+    "electron": "^3.0.2",
+    "inversify": "^5.0.1",
+    "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
     "express": "^4.16.0",

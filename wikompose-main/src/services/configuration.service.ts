@@ -1,6 +1,8 @@
 import { ConfigurationProperties, ConfigurationPropertiesMetadata, ConfigurationPropertyMetadata } from '../models/configuration.model';
 import * as fs from 'fs';
+import { injectable } from 'inversify';
 
+@injectable()
 export class ConfigurationService {
 
   public getConfiguration(): ConfigurationProperties {

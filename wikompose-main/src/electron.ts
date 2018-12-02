@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import { ElectronRouterService } from './services/electron-router.service';
+import { WikomposeMainApp } from './wikompose-main-app';
 
 let win: BrowserWindow;
 
@@ -21,9 +21,9 @@ function createWindow() {
     })
   );
 
-  // Initializing router
-  var electronRouterService = new ElectronRouterService(app, true);
-  electronRouterService.init();
+  // Initializing app
+  const mainApp = new WikomposeMainApp(app, true);
+  mainApp.init();
 
   // The following is optional and will open the DevTools:
   win.webContents.openDevTools();

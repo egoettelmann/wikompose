@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { ElectronRouterService } from './services/electron-router.service';
+import { WikomposeMainApp } from './wikompose-main-app';
 
 const app = express();
 
@@ -17,9 +17,9 @@ process.argv.forEach((value) => {
   }
 });
 
-// Initializing router
-var electronRouterService = new ElectronRouterService(app, false);
-electronRouterService.init();
+// Initializing app
+const mainApp = new WikomposeMainApp(app, false);
+mainApp.init();
 
 // Starting the app on port defined through options
 app.listen(opts.port, function () {

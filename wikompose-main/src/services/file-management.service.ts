@@ -1,9 +1,15 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { ConfigurationService } from './configuration.service';
+import { injectable } from 'inversify';
 
+@injectable()
 export class FileManagementService {
 
-  constructor(private baseFolder: string) {
+  private baseFolder: string;
+
+  constructor(private configurationService: ConfigurationService) {
+    this.baseFolder = configurationService.getConfiguration().contentPath;
   }
 
   public getFileTree() {
