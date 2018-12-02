@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import { WikomposeMainApp } from './wikompose-main-app';
 
 const app = express();
@@ -7,6 +8,8 @@ const app = express();
 const opts: { [key: string]: any } = {
   port: 3000
 };
+
+app.use(cors());
 
 // Extracting options passed as argument
 process.argv.forEach((value) => {

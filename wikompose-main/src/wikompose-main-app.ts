@@ -41,6 +41,7 @@ export class WikomposeMainApp {
       const expressApp = this.app as any;
       expressApp[methodName](url, (req: Request, res: Response) => {
         console.log('Received ' + method + ' request on ' + url);
+        // FIXME: transform request into form { queryParams: any, body: any }
         res.send(callback(req));
       });
     }
