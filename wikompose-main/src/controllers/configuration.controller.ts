@@ -18,17 +18,17 @@ export class ConfigurationController implements Controller {
   }
 
   @Route('/config')
-  private config() {
+  public config() {
     return this.configurationService.getConfiguration();
   }
 
   @Route('/settings/config')
-  private configSettings() {
+  public configSettings() {
     return this.configurationService.getConfigurationWithMetadata();
   }
 
   @Route('/settings/config', 'POST')
-  private updateConfigSettings(args: any) {
+  public updateConfigSettings(args: any) {
     return this.configurationService.updateConfiguration(args.body.property, args.body.value);
   }
 

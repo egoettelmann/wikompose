@@ -26,4 +26,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+  createNewFile(filePath: string[]) {
+    this.fileService.createFile(filePath, '').subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
 }

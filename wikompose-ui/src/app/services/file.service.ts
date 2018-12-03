@@ -38,4 +38,14 @@ export class FileService {
     return this.httpElectronService.post('/content', httpBody, { params: httpParams });
   }
 
+  public createFile(filePath: string[], fileContent: string): Observable<any> {
+    const httpParams = {
+      path: filePath
+    };
+    const httpBody = {
+      content: fileContent
+    };
+    return this.httpElectronService.put('/content', httpBody, { params: httpParams });
+  }
+
 }

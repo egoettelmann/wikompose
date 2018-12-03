@@ -1,7 +1,7 @@
 <section class="section main-container">
   <div class="columns">
     <div class="column is-2 column-sidebar">
-      <wk-sidebar [items]="files"></wk-sidebar>
+      <wk-sidebar [items]="files" (newFile)="createNewFile($event)"></wk-sidebar>
     </div>
     <div class="column is-10 column-content">
       <router-outlet></router-outlet>

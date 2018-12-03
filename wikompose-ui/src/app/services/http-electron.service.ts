@@ -66,6 +66,31 @@ export class HttpElectronService {
   }
 
   /**
+   * Performs a put request.
+   *
+   * @param url the url
+   * @param body the body
+   * @param httpOptions the Angular put options
+   */
+  public put(url: string, body: any, httpOptions?: any): Observable<any> {
+    if (this.electronService.isElectronApp) {
+      return Observable.create(observer => {
+        this.electronService.ipcRenderer.once('ui:put/' + url, (event, arg) => {
+          this.ngZone.run(() => {
+            observer.next(arg);
+            observer.complete();
+          });
+        });
+        this.electronService.ipcRenderer.send('main:put/' + url,
+          this.buildElectronArgs(httpOptions, body)
+        );
+      });
+    } else {
+      return this.httpClient.put(url, body, httpOptions);
+    }
+  }
+
+  /**
    * Builds the object to pass to the Electron IPCRenderer as arguments.
    *
    * @param httpOptions the http options

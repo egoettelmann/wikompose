@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
 import { FileService } from '../../services/file.service';
 
@@ -9,7 +9,8 @@ import { FileService } from '../../services/file.service';
 })
 export class SidebarComponent implements OnChanges {
 
-  @Input() public items: any;
+  @Input() items: any;
+  @Output() newFile = new EventEmitter<string[]>();
 
   public sortedItems: { key: string, value: any }[];
 
@@ -20,6 +21,10 @@ export class SidebarComponent implements OnChanges {
     if (changes.items) {
       this.sortedItems = this.unwrap(this.items);
     }
+  }
+
+  createNewFile(fileName: string) {
+    this.newFile.emit([fileName]);
   }
 
   hasItems(item: any) {

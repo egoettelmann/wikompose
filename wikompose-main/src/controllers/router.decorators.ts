@@ -6,7 +6,7 @@ export const MetadataKeys = {
   URL: Symbol.for('URL')
 };
 
-export function Route(url: string, method: 'GET' | 'POST' = 'GET'): Function {
+export function Route(url: string, method: 'GET' | 'POST' | 'PUT' = 'GET'): Function {
   return (target: object, propertyKey: string) => {
     // Registering the METHOD
     Reflect.defineMetadata(MetadataKeys.METHOD, method, target, propertyKey);

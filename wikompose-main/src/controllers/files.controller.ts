@@ -16,8 +16,7 @@ export class FilesController {
   }
 
   @Route('/content')
-  private fileContent(args: any) {
-    // Loading the content
+  public fileContent(args: any) {
     const filePath = Array.isArray(args.queryParams.path) ? args.queryParams.path : [args.queryParams.path];
     const content = this.fileManagementService.getFileContent(filePath);
     return {
@@ -27,9 +26,15 @@ export class FilesController {
   }
 
   @Route('/content', 'POST')
-  private registerFileWrite(args: any) {
+  public registerFileWrite(args: any) {
     const filePath = Array.isArray(args.queryParams.path) ? args.queryParams.path : [args.queryParams.path];
-    // Writing the content
     this.fileManagementService.saveFileContent(filePath, args.body.content);
   }
+
+  @Route('/content', 'PUT')
+  public createFile(args: any) {
+    const filePath = Array.isArray(args.queryParams.path) ? args.queryParams.path : [args.queryParams.path];
+    this.fileManagementService.createFile(filePath, args.body.content);
+  }
+
 }
