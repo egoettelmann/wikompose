@@ -1,0 +1,30 @@
+.sidebar {
+
+  &-item {
+    padding: 0.2rem;
+
+    ul {
+      margin-left: 1rem;
+    }
+
+    &-link {
+      cursor: pointer;
+      color: #6a737d;
+
+      &:hover {
+        color: #0366d6;
+      }
+
+      .icon {
+        margin-right: 0.3rem;
+        position: relative;
+
+        .caret {
+          position: absolute;
+          top: 0;
+          left: -0.8rem;
+        }
+      }
+    }
+  }
+}

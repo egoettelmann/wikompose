@@ -13,13 +13,15 @@ import { ConfigurationService } from './services/configuration.service';
 import { SettingsComponent } from './views/settings/settings.component';
 import { HttpElectronService } from './services/http-electron.service';
 import { ApiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
+import { FileListComponent } from './components/sidebar/file-list/file-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SettingsComponent,
     NavigationComponent,
-    SidebarComponent
+    SidebarComponent,
+    FileListComponent
   ],
   imports: [
     BrowserModule,
