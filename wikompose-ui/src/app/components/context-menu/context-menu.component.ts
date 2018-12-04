@@ -3,7 +3,7 @@ import { fromEvent } from 'rxjs';
 import { ContextMenuItem, ContextMenuService } from '../../services/context-menu.service';
 
 @Component({
-  selector: 'wk-context-menu',
+  selector: 'app-context-menu',
   templateUrl: './context-menu.component.html',
   styleUrls: ['./context-menu.component.scss']
 })

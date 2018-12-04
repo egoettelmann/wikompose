@@ -4,7 +4,7 @@ import { FileService } from '../../../services/file.service';
 import { ContextMenuService } from '../../../services/context-menu.service';
 
 @Component({
-  selector: '[wk-file-list]',
+  selector: '[app-file-list]',
   templateUrl: './file-list.component.html',
   styleUrls: ['./file-list.component.scss']
 })

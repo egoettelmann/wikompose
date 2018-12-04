@@ -12,7 +12,7 @@
     <span>{{ item.key }}</span>
   </span>
   <!-- Content of folder -->
-  <ul wk-file-list
+  <ul app-file-list
       *ngIf="opened[i] && item.value"
       [items]="item.value"
       [path]="getPath(item.key)"

@@ -1,7 +1,7 @@
 <section class="section main-container">
   <div class="columns">
     <div class="column is-2 column-sidebar">
-      <wk-sidebar [items]="files" (newFile)="createNewFile($event)"></wk-sidebar>
+      <app-sidebar [items]="files" (newFile)="createNewFile($event)"></app-sidebar>
     </div>
     <div class="column is-10 column-content">
       <router-outlet></router-outlet>
@@ -17,4 +17,4 @@
 
 <router-outlet name="modal"></router-outlet>
 
-<wk-context-menu></wk-context-menu>
+<app-context-menu></app-context-menu>
