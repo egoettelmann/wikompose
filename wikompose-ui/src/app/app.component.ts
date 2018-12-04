@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FileService } from './services/file.service';
 import { Router } from '@angular/router';
 
@@ -30,6 +30,11 @@ export class AppComponent implements OnInit {
     this.fileService.createFile(filePath, '').subscribe(() => {
       this.ngOnInit();
     });
+  }
+
+  @HostListener('body:contextmenu', ['$event'])
+  preventRightClick(event: MouseEvent) {
+    event.preventDefault();
   }
 
 }
