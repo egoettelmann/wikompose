@@ -1,0 +1,5 @@
+<ul #contextMenu id="context-menu">
+  <li *ngFor="let item of currentMenuItems" (click)="item.action()">
+    <span>{{ item.label }}</span>
+  </li>
+</ul>

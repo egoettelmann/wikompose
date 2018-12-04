@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
 import { FileService } from '../../../services/file.service';
+import { ContextMenuService } from '../../../services/context-menu.service';
 
 @Component({
   selector: '[wk-file-list]',
@@ -10,12 +11,17 @@ import { FileService } from '../../../services/file.service';
 export class FileListComponent implements OnChanges {
 
   @Input() items: any;
+  @Input() path: string[] = [];
   @Output() newFile = new EventEmitter<string[]>();
 
+  public menuOpened: number;
   public opened: boolean[] = [];
   public sortedItems: { key: string, value: any }[];
 
-  constructor(private keyValuePipe: KeyValuePipe) {
+  constructor(
+    private keyValuePipe: KeyValuePipe,
+    private contextMenuService: ContextMenuService
+  ) {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -32,10 +38,37 @@ export class FileListComponent implements OnChanges {
     this.newFile.emit(filePath);
   }
 
-  getQueryParam(filePath: string[]) {
+  openMenu(event: MouseEvent, index: number) {
+    return this.contextMenuService.open([
+      {
+        label: 'New folder',
+        action: () => {
+          console.log('New folder');
+        }
+      },
+      {
+        label: 'New file',
+        action: () => {
+          this.menuOpened = index;
+        }
+      }
+    ]);
+  }
+
+  onFileInput(event, folder) {
+    console.log(event.target.value, folder);
+    this.menuOpened = undefined;
+    this.createNewFile([event.target.value], folder);
+  }
+
+  getQueryParam(fileName: string) {
     return {
-      file: FileService.encodeFilePath(filePath)
+      file: FileService.encodeFilePath(this.getPath(fileName))
     };
+  }
+
+  getPath(item) {
+    return [...this.path, item];
   }
 
   private unwrap(items: any): any[] {

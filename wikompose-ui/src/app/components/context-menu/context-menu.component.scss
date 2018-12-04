@@ -1,0 +1,15 @@
+#context-menu {
+  z-index: 100000;
+  background-color: white;
+  border-radius: 2px;
+  border: 1px solid gray;
+
+  li {
+    padding: .3rem .5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+}

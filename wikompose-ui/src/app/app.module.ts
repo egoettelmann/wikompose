@@ -14,6 +14,8 @@ import { SettingsComponent } from './views/settings/settings.component';
 import { HttpElectronService } from './services/http-electron.service';
 import { ApiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
 import { FileListComponent } from './components/sidebar/file-list/file-list.component';
+import { ContextMenuService } from './services/context-menu.service';
+import { ContextMenuComponent } from './components/context-menu/context-menu.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { FileListComponent } from './components/sidebar/file-list/file-list.comp
     SettingsComponent,
     NavigationComponent,
     SidebarComponent,
-    FileListComponent
+    FileListComponent,
+    ContextMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import { FileListComponent } from './components/sidebar/file-list/file-list.comp
     FileService,
     ConfigurationService,
     HttpElectronService,
+    ContextMenuService,
     KeyValuePipe,
     {
       provide: HTTP_INTERCEPTORS,

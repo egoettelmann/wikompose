@@ -1,6 +1,8 @@
 <li class="sidebar-item" *ngFor="let item of sortedItems; let i = index">
+  <!-- Folder -->
   <span *ngIf="item.value"
         class="sidebar-item-link"
+        (contextmenu)="openMenu($event, i)"
         (click)="opened[i] = !opened[i]">
     <span class="icon is-small">
       <i class="caret fas fa-caret-down" *ngIf="opened[i]"></i>
@@ -9,19 +11,26 @@
     </span>
     <span>{{ item.key }}</span>
   </span>
+  <!-- Content of folder -->
+  <ul wk-file-list
+      *ngIf="opened[i] && item.value"
+      [items]="item.value"
+      [path]="getPath(item.key)"
+      (newFile)="createNewFile($event, item.key)">
+  </ul>
+  <input *ngIf="menuOpened === i"
+         type="text"
+         (focusout)="onFileInput($event, item.key)" />
+
+  <!-- File -->
   <a *ngIf="!item.value"
      class="sidebar-item-link"
      [routerLink]="['/content/view']"
-     [queryParams]="getQueryParam([item.key])"
+     [queryParams]="getQueryParam(item.key)"
      [routerLinkActive]="'is-active'">
     <span class="icon is-small">
       <i class="fas fa-file"></i>
     </span>
     <span>{{ item.key }}</span>
   </a>
-  <ul wk-file-list
-      *ngIf="opened[i] && item.value"
-      [items]="item.value"
-      (newFile)="createNewFile($event, item.key)">
-  </ul>
 </li>
