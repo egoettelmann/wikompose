@@ -1,3 +1,7 @@
 <aside class="sidebar">
-  <ul app-file-list *ngIf="items" [items]="items" (newFile)="createNewFile($event)"></ul>
+  <app-folder [items]="items"
+              (newItem)="createNewItem($event)"
+              (openFile)="open($event)">
+
+  </app-folder>
 </aside>

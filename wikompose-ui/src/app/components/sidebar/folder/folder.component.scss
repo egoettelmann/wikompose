@@ -2,8 +2,10 @@
 
   &-item {
     padding: 0.2rem;
+    list-style: none;
 
-    ul {
+    &-list {
+      display: block;
       margin-left: 1rem;
     }
 

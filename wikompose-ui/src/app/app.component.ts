@@ -32,6 +32,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+  createNewFolder(filePath: string[]) {
+    console.log('Creating folder', filePath);
+  }
+
   @HostListener('body:contextmenu', ['$event'])
   preventRightClick(event: MouseEvent) {
     event.preventDefault();

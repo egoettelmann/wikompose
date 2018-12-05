@@ -3,18 +3,23 @@ import { KeyValuePipe } from '@angular/common';
 import { FileService } from '../../../services/file.service';
 import { ContextMenuService } from '../../../services/context-menu.service';
 
+declare interface CreateItem {
+  path: string[];
+  type: 'folder' | 'file';
+}
+
 @Component({
-  selector: '[app-file-list]',
-  templateUrl: './file-list.component.html',
-  styleUrls: ['./file-list.component.scss']
+  selector: 'app-folder',
+  templateUrl: './folder.component.html',
+  styleUrls: ['./folder.component.scss']
 })
-export class FileListComponent implements OnChanges {
+export class FolderComponent implements OnChanges {
 
-  @Input() items: any;
-  @Input() path: string[] = [];
-  @Output() newFile = new EventEmitter<string[]>();
+  @Input() items: any[];
+  @Output() newItem = new EventEmitter<CreateItem>();
+  @Output() openFile = new EventEmitter<string[]>();
 
-  public menuOpened: number;
+  public create: CreateItem;
   public opened: boolean[] = [];
   public sortedItems: { key: string, value: any }[];
 
@@ -30,45 +35,41 @@ export class FileListComponent implements OnChanges {
     }
   }
 
-  createNewFile(fileName: string[], folder?: string) {
-    const filePath = fileName.slice(0);
-    if (folder) {
-      filePath.unshift(folder);
-    }
-    this.newFile.emit(filePath);
+  open(items: string[], item: string) {
+    const filePath = items.slice(0);
+    filePath.unshift(item);
+    this.openFile.emit(filePath);
   }
 
-  openMenu(event: MouseEvent, index: number) {
+  openMenu() {
     return this.contextMenuService.open([
       {
         label: 'New folder',
         action: () => {
-          console.log('New folder');
+          this.create = { path: [], type: 'folder' };
         }
       },
       {
         label: 'New file',
         action: () => {
-          this.menuOpened = index;
+          this.create = { path: [], type: 'file' };
         }
       }
     ]);
   }
 
-  onFileInput(event, folder) {
-    console.log(event.target.value, folder);
-    this.menuOpened = undefined;
-    this.createNewFile([event.target.value], folder);
+  createNewItem(item: CreateItem, folder?: string) {
+    const filePath = item.path.slice(0);
+    if (folder) {
+      filePath.unshift(folder);
+    }
+    this.newItem.emit({ path: filePath, type: item.type });
   }
 
-  getQueryParam(fileName: string) {
-    return {
-      file: FileService.encodeFilePath(this.getPath(fileName))
-    };
-  }
-
-  getPath(item) {
-    return [...this.path, item];
+  onInput(event, type: 'file' | 'folder') {
+    console.log(event.target.value);
+    this.create = undefined;
+    this.createNewItem({ path: [event.target.value], type: type });
   }
 
   private unwrap(items: any): any[] {

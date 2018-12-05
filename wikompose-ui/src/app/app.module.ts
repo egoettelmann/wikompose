@@ -13,9 +13,9 @@ import { ConfigurationService } from './services/configuration.service';
 import { SettingsComponent } from './views/settings/settings.component';
 import { HttpElectronService } from './services/http-electron.service';
 import { ApiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
-import { FileListComponent } from './components/sidebar/file-list/file-list.component';
 import { ContextMenuService } from './services/context-menu.service';
 import { ContextMenuComponent } from './components/context-menu/context-menu.component';
+import { FolderComponent } from './components/sidebar/folder/folder.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { ContextMenuComponent } from './components/context-menu/context-menu.com
     SettingsComponent,
     NavigationComponent,
     SidebarComponent,
-    FileListComponent,
+    FolderComponent,
     ContextMenuComponent
   ],
   imports: [

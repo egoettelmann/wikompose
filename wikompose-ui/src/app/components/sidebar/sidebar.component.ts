@@ -1,20 +1,36 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { FileService } from '../../services/file.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnChanges {
+export class SidebarComponent {
 
   @Input() items: any;
   @Output() newFile = new EventEmitter<string[]>();
+  @Output() newFolder = new EventEmitter<string[]>();
 
-  ngOnChanges(changes: SimpleChanges): void {
+  constructor(
+    private router: Router
+  ) {}
+
+  open(filePath: string[]) {
+    this.router.navigate(['/content/view'], {
+      queryParams: {
+        file: FileService.encodeFilePath(filePath)
+      }
+    });
   }
 
-  createNewFile(fileName: string[]) {
-    this.newFile.emit(fileName);
+  createNewItem(createItem: { path: string[], type: 'file' | 'folder' }) {
+    if (createItem.type === 'file') {
+      this.newFile.emit(createItem.path);
+    } else {
+      this.newFolder.emit(createItem.path);
+    }
   }
 
 }
