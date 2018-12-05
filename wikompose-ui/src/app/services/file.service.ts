@@ -48,4 +48,11 @@ export class FileService {
     return this.httpElectronService.put('/content', httpBody, { params: httpParams });
   }
 
+  public createFolder(filePath: string[]): Observable<any> {
+    const httpParams = {
+      path: filePath
+    };
+    return this.httpElectronService.put('/folder', {}, { params: httpParams });
+  }
+
 }

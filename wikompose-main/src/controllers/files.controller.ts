@@ -37,4 +37,10 @@ export class FilesController {
     this.fileManagementService.createFile(filePath, args.body.content);
   }
 
+  @Route('/folder', 'PUT')
+  public createFolder(args: any) {
+    const filePath = Array.isArray(args.queryParams.path) ? args.queryParams.path : [args.queryParams.path];
+    this.fileManagementService.createFolder(filePath);
+  }
+
 }

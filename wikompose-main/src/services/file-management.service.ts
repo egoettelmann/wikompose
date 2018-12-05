@@ -56,6 +56,18 @@ export class FileManagementService {
   }
 
   /**
+   * Creates a new empty folder.
+   *
+   * @param filePath the file path as an array
+   */
+  public createFolder(filePath: string[]) {
+    const folder = path.join(this.configuration.contentPath, ...filePath);
+    if (!fs.existsSync(folder)) {
+      fs.mkdirSync(folder);
+    }
+  }
+
+  /**
    * Walks a folder to list all files recursively and groups them by sub-folder.
    *
    * @param dir the folder to walk

@@ -33,7 +33,9 @@ export class AppComponent implements OnInit {
   }
 
   createNewFolder(filePath: string[]) {
-    console.log('Creating folder', filePath);
+    this.fileService.createFolder(filePath).subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   @HostListener('body:contextmenu', ['$event'])

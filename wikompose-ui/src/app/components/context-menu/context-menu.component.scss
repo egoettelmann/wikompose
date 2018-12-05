@@ -1,12 +1,18 @@
 #context-menu {
   z-index: 100000;
+  box-shadow: 5px 5px 2px gray;
   background-color: white;
   border-radius: 2px;
   border: 1px solid gray;
+  font-size: 0.9rem;
 
   li {
-    padding: .3rem .5rem;
+    padding: .1rem .3rem;
     cursor: pointer;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #B6B6B6;
+    }
 
     &:hover {
       background-color: lightgray;
