@@ -1,37 +1,40 @@
-<ul class="sidebar-list">
-  <li class="sidebar-item" *ngFor="let item of sortedItems; let i = index">
-    <!-- Folder -->
-    <div *ngIf="item.value"
-         class="sidebar-item-link"
-         (contextmenu)="openMenu()"
-         (click)="opened[i] = !opened[i]">
+<div class="folder">
+  <!-- Folder details -->
+  <div *ngIf="folder.key"
+       class="folder-link"
+       (contextmenu)="openFolderMenu()"
+       (click)="opened = !opened">
       <span class="icon is-small">
-        <i class="caret fas fa-caret-down" *ngIf="opened[i]"></i>
-        <i class="caret fas fa-caret-right" *ngIf="!opened[i]"></i>
+        <i class="caret fas fa-caret-down" *ngIf="opened"></i>
+        <i class="caret fas fa-caret-right" *ngIf="!opened"></i>
         <i class="fas fa-folder"></i>
       </span>
-      <span>{{ item.key }}</span>
-    </div>
-    <!-- Content of folder -->
-    <app-folder *ngIf="item.value && opened[i]"
-                class="sidebar-item-list"
-                [items]="item.value"
-                (openFile)="open($event, item.key)"
-                (newItem)="createNewItem($event, item.key)">
-    </app-folder>
-
-    <!-- File -->
-    <div *ngIf="!item.value"
-         class="sidebar-item-link"
-         (click)="open([], item.key)">
-      <span class="icon is-small">
-        <i class="fas fa-file"></i>
-      </span>
-      <span>{{ item.key }}</span>
-    </div>
-  </li>
-  <li *ngIf="create">
-    <input type="text"
-           (focusout)="onInput($event, create.type)"/>
-  </li>
-</ul>
+    <span>{{ folder.key }}</span>
+  </div>
+  <ul *ngIf="opened || !folder.key"
+      class="folder-list" [class.-root]="!folder.key">
+    <li *ngFor="let item of sortedItems"
+        class="folder-list-item">
+      <!-- Sub-folder -->
+      <app-folder *ngIf="item.value"
+                  [folder]="item"
+                  (openFile)="open($event)"
+                  (newItem)="createNewItem($event)">
+      </app-folder>
+      <!-- File -->
+      <div *ngIf="!item.value"
+           class="folder-link"
+           (click)="open([item.key])">
+        <span class="icon is-small">
+          <i class="fas fa-file"></i>
+        </span>
+        <span>{{ item.key }}</span>
+      </div>
+    </li>
+    <!-- New item -->
+    <li *ngIf="create">
+      <input type="text"
+             (focusout)="onInput($event, create.type)"/>
+    </li>
+  </ul>
+</div>

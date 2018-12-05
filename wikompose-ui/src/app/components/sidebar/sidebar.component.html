@@ -1,7 +1,6 @@
 <aside class="sidebar">
-  <app-folder [items]="items"
+  <app-folder [folder]="{ key: '', value: items }"
               (newItem)="createNewItem($event)"
               (openFile)="open($event)">
-
   </app-folder>
 </aside>

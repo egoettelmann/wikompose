@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
-import { FileService } from '../../../services/file.service';
 import { ContextMenuService } from '../../../services/context-menu.service';
 
 declare interface CreateItem {
@@ -15,12 +14,12 @@ declare interface CreateItem {
 })
 export class FolderComponent implements OnChanges {
 
-  @Input() items: any[];
+  @Input() folder: { key: string, value: any[] };
   @Output() newItem = new EventEmitter<CreateItem>();
   @Output() openFile = new EventEmitter<string[]>();
 
   public create: CreateItem;
-  public opened: boolean[] = [];
+  public opened = true;
   public sortedItems: { key: string, value: any }[];
 
   constructor(
@@ -30,38 +29,42 @@ export class FolderComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.items) {
-      this.sortedItems = this.unwrap(this.items);
+    if (changes.folder) {
+      this.sortedItems = this.unwrap(this.folder.value);
     }
   }
 
-  open(items: string[], item: string) {
+  open(items: string[]) {
     const filePath = items.slice(0);
-    filePath.unshift(item);
+    if (this.folder.key) {
+      filePath.unshift(this.folder.key);
+    }
     this.openFile.emit(filePath);
   }
 
-  openMenu() {
+  openFolderMenu() {
     return this.contextMenuService.open([
       {
         label: 'New folder',
         action: () => {
+          this.opened = true;
           this.create = { path: [], type: 'folder' };
         }
       },
       {
         label: 'New file',
         action: () => {
+          this.opened = true;
           this.create = { path: [], type: 'file' };
         }
       }
     ]);
   }
 
-  createNewItem(item: CreateItem, folder?: string) {
+  createNewItem(item: CreateItem) {
     const filePath = item.path.slice(0);
-    if (folder) {
-      filePath.unshift(folder);
+    if (this.folder.key) {
+      filePath.unshift(this.folder.key);
     }
     this.newItem.emit({ path: filePath, type: item.type });
   }
@@ -78,9 +81,6 @@ export class FolderComponent implements OnChanges {
     if (!keyValues) {
       return [];
     }
-    keyValues.forEach((k, idx) => {
-      this.opened[idx] = true;
-    });
     // Sort: folder before files, otherwise alphabetically
     return keyValues.sort((a: any, b: any) => {
       if (a.value !== null && b.value === null) {

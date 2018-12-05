@@ -1,32 +1,31 @@
-.sidebar {
+.folder {
 
-  &-item {
-    padding: 0.2rem;
-    list-style: none;
+  &-link {
+    cursor: pointer;
+    color: #6a737d;
 
-    &-list {
-      display: block;
-      margin-left: 1rem;
+    &:hover {
+      color: #0366d6;
     }
 
-    &-link {
-      cursor: pointer;
-      color: #6a737d;
+    .icon {
+      margin-right: 0.3rem;
+      position: relative;
 
-      &:hover {
-        color: #0366d6;
+      .caret {
+        position: absolute;
+        top: 0;
+        left: -0.8rem;
       }
+    }
+  }
 
-      .icon {
-        margin-right: 0.3rem;
-        position: relative;
+  &-list {
+    display: block;
+    margin-left: 1rem;
 
-        .caret {
-          position: absolute;
-          top: 0;
-          left: -0.8rem;
-        }
-      }
+    &.-root {
+      margin-left: 0;
     }
   }
 }
