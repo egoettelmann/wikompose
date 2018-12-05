@@ -3,7 +3,8 @@
     <div class="column is-2 column-sidebar">
       <app-sidebar [items]="files"
                    (newFile)="createNewFile($event)"
-                   (newFolder)="createNewFolder($event)">
+                   (newFolder)="createNewFolder($event)"
+                   (delete)="deleteItem($event)">
       </app-sidebar>
     </div>
     <div class="column is-10 column-content">

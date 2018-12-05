@@ -19,11 +19,13 @@
       <app-folder *ngIf="item.value"
                   [folder]="item"
                   (openFile)="open($event)"
-                  (newItem)="createNewItem($event)">
+                  (newItem)="createNewItem($event)"
+                  (delete)="deleteItem($event)">
       </app-folder>
       <!-- File -->
       <div *ngIf="!item.value"
            class="folder-link"
+           (contextmenu)="openFolderMenu(item.key)"
            (click)="open([item.key])">
         <span class="icon is-small">
           <i class="fas fa-file"></i>

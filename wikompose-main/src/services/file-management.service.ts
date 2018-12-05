@@ -68,6 +68,21 @@ export class FileManagementService {
   }
 
   /**
+   * Deletes an existing file or folder.
+   *
+   * @param filePath the file path as an array
+   */
+  public deleteFile(filePath: string[]) {
+    const folder = path.join(this.configuration.contentPath, ...filePath);
+    const file = folder + '.md';
+    if (fs.existsSync(folder)) {
+      this.rmdirForceSync(folder);
+    } else if (fs.existsSync(file)) {
+      fs.unlinkSync(file);
+    }
+  }
+
+  /**
    * Walks a folder to list all files recursively and groups them by sub-folder.
    *
    * @param dir the folder to walk
@@ -87,6 +102,25 @@ export class FileManagementService {
         }
       });
     return fileTree;
+  }
+
+  /**
+   * Removes a non-empty folder recursively.
+   *
+   * @param filePath the file path to remove
+   */
+  private rmdirForceSync(filePath: string) {
+    if (fs.existsSync(filePath)) {
+      fs.readdirSync(filePath).forEach((file) => {
+        const currentPath = path.join(filePath, file);
+        if (fs.lstatSync(currentPath).isDirectory()) {
+          this.rmdirForceSync(currentPath);
+        } else {
+          fs.unlinkSync(currentPath);
+        }
+      });
+      fs.rmdirSync(filePath);
+    }
   }
 
 }

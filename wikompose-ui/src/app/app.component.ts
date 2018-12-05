@@ -38,6 +38,12 @@ export class AppComponent implements OnInit {
     });
   }
 
+  deleteItem(path: string[]) {
+    this.fileService.delete(path).subscribe(() => {
+      this.ngOnInit();
+    });
+  }
+
   @HostListener('body:contextmenu', ['$event'])
   preventRightClick(event: MouseEvent) {
     event.preventDefault();

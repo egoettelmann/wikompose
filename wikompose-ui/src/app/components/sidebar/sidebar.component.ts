@@ -12,6 +12,7 @@ export class SidebarComponent {
   @Input() items: any;
   @Output() newFile = new EventEmitter<string[]>();
   @Output() newFolder = new EventEmitter<string[]>();
+  @Output() delete = new EventEmitter<string[]>();
 
   constructor(
     private router: Router
@@ -31,6 +32,10 @@ export class SidebarComponent {
     } else {
       this.newFolder.emit(createItem.path);
     }
+  }
+
+  deleteItem(path: string[]) {
+    this.delete.emit(path);
   }
 
 }

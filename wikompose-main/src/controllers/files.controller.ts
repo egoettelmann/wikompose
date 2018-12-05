@@ -37,6 +37,12 @@ export class FilesController {
     this.fileManagementService.createFile(filePath, args.body.content);
   }
 
+  @Route('/content', 'DELETE')
+  public delete(args: any) {
+    const filePath = Array.isArray(args.queryParams.path) ? args.queryParams.path : [args.queryParams.path];
+    this.fileManagementService.deleteFile(filePath);
+  }
+
   @Route('/folder', 'PUT')
   public createFolder(args: any) {
     const filePath = Array.isArray(args.queryParams.path) ? args.queryParams.path : [args.queryParams.path];

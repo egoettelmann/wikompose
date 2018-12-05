@@ -17,6 +17,7 @@ export class FolderComponent implements OnChanges {
   @Input() folder: { key: string, value: any[] };
   @Output() newItem = new EventEmitter<CreateItem>();
   @Output() openFile = new EventEmitter<string[]>();
+  @Output() delete = new EventEmitter<string[]>();
 
   public create: CreateItem;
   public opened = true;
@@ -42,7 +43,7 @@ export class FolderComponent implements OnChanges {
     this.openFile.emit(filePath);
   }
 
-  openFolderMenu() {
+  openFolderMenu(file?: string) {
     return this.contextMenuService.open([
       {
         label: 'New folder',
@@ -57,6 +58,16 @@ export class FolderComponent implements OnChanges {
           this.opened = true;
           this.create = { path: [], type: 'file' };
         }
+      },
+      {
+        label: 'Delete',
+        action: () => {
+          if (file) {
+            this.deleteItem([file]);
+          } else {
+            this.deleteItem([]);
+          }
+        }
       }
     ]);
   }
@@ -67,6 +78,14 @@ export class FolderComponent implements OnChanges {
       filePath.unshift(this.folder.key);
     }
     this.newItem.emit({ path: filePath, type: item.type });
+  }
+
+  deleteItem(path: string[]) {
+    if (this.folder.key) {
+      this.delete.emit([this.folder.key, ...path]);
+    } else {
+      this.delete.emit(path);
+    }
   }
 
   onInput(event, type: 'file' | 'folder') {

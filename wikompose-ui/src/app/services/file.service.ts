@@ -55,4 +55,11 @@ export class FileService {
     return this.httpElectronService.put('/folder', {}, { params: httpParams });
   }
 
+  public delete(filePath: string[]): Observable<any> {
+    const httpParams = {
+      path: filePath
+    };
+    return this.httpElectronService.delete('/content', { params: httpParams });
+  }
+
 }

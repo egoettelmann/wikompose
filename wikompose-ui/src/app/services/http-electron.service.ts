@@ -91,6 +91,30 @@ export class HttpElectronService {
   }
 
   /**
+   * Performs a delete request.
+   *
+   * @param url the url
+   * @param httpOptions the Angular put options
+   */
+  public delete(url: string, httpOptions?: any): Observable<any> {
+    if (this.electronService.isElectronApp) {
+      return Observable.create(observer => {
+        this.electronService.ipcRenderer.once('ui:delete/' + url, (event, arg) => {
+          this.ngZone.run(() => {
+            observer.next(arg);
+            observer.complete();
+          });
+        });
+        this.electronService.ipcRenderer.send('main:delete/' + url,
+          this.buildElectronArgs(httpOptions)
+        );
+      });
+    } else {
+      return this.httpClient.delete(url, httpOptions);
+    }
+  }
+
+  /**
    * Builds the object to pass to the Electron IPCRenderer as arguments.
    *
    * @param httpOptions the http options
