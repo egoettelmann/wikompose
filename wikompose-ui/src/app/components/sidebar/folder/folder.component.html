@@ -35,8 +35,17 @@
     </li>
     <!-- New item -->
     <li *ngIf="create">
-      <input type="text"
-             (focusout)="onInput($event, create.type)"/>
+      <div class="folder-link">
+        <span *ngIf="create.type === 'file'" class="icon is-small">
+          <i class="fas fa-file"></i>
+        </span>
+        <span *ngIf="create.type === 'folder'" class="icon is-small">
+          <i class="fas fa-folder"></i>
+        </span>
+        <input type="text"
+               #itemInput
+               (focusout)="onInput($event, create.type)"/>
+      </div>
     </li>
   </ul>
 </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
 import { ContextMenuService } from '../../../services/context-menu.service';
 
@@ -18,6 +18,8 @@ export class FolderComponent implements OnChanges {
   @Output() newItem = new EventEmitter<CreateItem>();
   @Output() openFile = new EventEmitter<string[]>();
   @Output() delete = new EventEmitter<string[]>();
+
+  @ViewChild('itemInput') itemInput: ElementRef;
 
   public create: CreateItem;
   public opened = true;
@@ -50,6 +52,7 @@ export class FolderComponent implements OnChanges {
         action: () => {
           this.opened = true;
           this.create = { path: [], type: 'folder' };
+          this.focusInput();
         }
       },
       {
@@ -57,6 +60,7 @@ export class FolderComponent implements OnChanges {
         action: () => {
           this.opened = true;
           this.create = { path: [], type: 'file' };
+          this.focusInput();
         }
       },
       {
@@ -92,6 +96,12 @@ export class FolderComponent implements OnChanges {
     console.log(event.target.value);
     this.create = undefined;
     this.createNewItem({ path: [event.target.value], type: type });
+  }
+
+  private focusInput() {
+    setTimeout(() => {
+      this.itemInput.nativeElement.focus();
+    });
   }
 
   private unwrap(items: any): any[] {
