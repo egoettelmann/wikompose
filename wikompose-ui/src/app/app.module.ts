@@ -16,6 +16,7 @@ import { ApiPrefixInterceptor } from './interceptors/api-prefix.interceptor';
 import { ContextMenuService } from './services/context-menu.service';
 import { ContextMenuComponent } from './components/context-menu/context-menu.component';
 import { FolderComponent } from './components/sidebar/folder/folder.component';
+import { ResizableModule } from 'angular-resizable-element';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FolderComponent } from './components/sidebar/folder/folder.component';
     BrowserModule,
     HttpClientModule,
     NgxElectronModule,
+    ResizableModule,
     AppRoutingModule
   ],
   providers: [

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FileService } from './services/file.service';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
 
   public files = {};
+  public sidebarWidth;
 
   constructor(private router: Router,
               private fileService: FileService) {
@@ -47,6 +48,10 @@ export class AppComponent implements OnInit {
   @HostListener('body:contextmenu', ['$event'])
   preventRightClick(event: MouseEvent) {
     event.preventDefault();
+  }
+
+  resizing(event: { edges: any, rectangle: any }) {
+    this.sidebarWidth = event.rectangle.width;
   }
 
 }
