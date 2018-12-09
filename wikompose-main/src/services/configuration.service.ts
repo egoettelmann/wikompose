@@ -50,7 +50,9 @@ export class ConfigurationService {
    */
   private getSavedConfiguration(): ConfigurationProperties {
     if (!fs.existsSync(this.getConfigurationFilePath())) {
-      fs.mkdirSync(this.getConfigurationFolderPath());
+      if (!fs.existsSync(this.getConfigurationFolderPath())) {
+        fs.mkdirSync(this.getConfigurationFolderPath());
+      }
       fs.writeFileSync(this.getConfigurationFilePath(), '{}', { encoding: 'utf8', flag: 'w' });
     }
     const configAsString = fs.readFileSync(this.getConfigurationFilePath(), 'utf8');

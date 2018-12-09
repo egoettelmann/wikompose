@@ -3,6 +3,7 @@ import * as path from 'path';
 import { ConfigurationService } from './configuration.service';
 import { injectable } from 'inversify';
 import { ConfigurationProperties } from '../models/configuration.model';
+import { InternalError } from '../models/errors.model';
 
 @injectable()
 export class FileManagementService {
@@ -18,7 +19,7 @@ export class FileManagementService {
    */
   public getFileTree() {
     if (!this.configuration.contentPath) {
-      return undefined; // FIXME: throw exception and add exception handler
+      throw new InternalError('501', 'contend_path_undefined', 'No content path defined');
     }
     return this.walkSync(this.configuration.contentPath);
   }

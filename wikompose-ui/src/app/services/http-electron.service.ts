@@ -1,7 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ElectronService } from 'ngx-electron';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 /**
  * Wrapper for using both HttpClient / IPCRenderer, depending on the current runtime environment.
@@ -27,8 +28,12 @@ export class HttpElectronService {
       return Observable.create(observer => {
         this.electronService.ipcRenderer.once('ui:get/' + url, (event, arg) => {
           this.ngZone.run(() => {
-            observer.next(arg);
-            observer.complete();
+            if (arg.error) {
+              observer.error(arg.content);
+            } else {
+              observer.next(arg.content);
+              observer.complete();
+            }
           });
         });
         this.electronService.ipcRenderer.send('main:get/' + url,
@@ -36,7 +41,9 @@ export class HttpElectronService {
         );
       });
     } else {
-      return this.httpClient.get(url, httpOptions);
+      return this.httpClient.get(url, httpOptions).pipe(
+        catchError(e => this.handleError(e.error))
+      );
     }
   }
 
@@ -52,8 +59,12 @@ export class HttpElectronService {
       return Observable.create(observer => {
         this.electronService.ipcRenderer.once('ui:post/' + url, (event, arg) => {
           this.ngZone.run(() => {
-            observer.next(arg);
-            observer.complete();
+            if (arg.error) {
+              observer.error(arg.content);
+            } else {
+              observer.next(arg.content);
+              observer.complete();
+            }
           });
         });
         this.electronService.ipcRenderer.send('main:post/' + url,
@@ -61,7 +72,9 @@ export class HttpElectronService {
         );
       });
     } else {
-      return this.httpClient.post(url, body, httpOptions);
+      return this.httpClient.post(url, body, httpOptions).pipe(
+        catchError(e => this.handleError(e.error))
+      );
     }
   }
 
@@ -77,8 +90,12 @@ export class HttpElectronService {
       return Observable.create(observer => {
         this.electronService.ipcRenderer.once('ui:put/' + url, (event, arg) => {
           this.ngZone.run(() => {
-            observer.next(arg);
-            observer.complete();
+            if (arg.error) {
+              observer.error(arg.content);
+            } else {
+              observer.next(arg.content);
+              observer.complete();
+            }
           });
         });
         this.electronService.ipcRenderer.send('main:put/' + url,
@@ -86,7 +103,9 @@ export class HttpElectronService {
         );
       });
     } else {
-      return this.httpClient.put(url, body, httpOptions);
+      return this.httpClient.put(url, body, httpOptions).pipe(
+        catchError(e => this.handleError(e.error))
+      );
     }
   }
 
@@ -101,8 +120,12 @@ export class HttpElectronService {
       return Observable.create(observer => {
         this.electronService.ipcRenderer.once('ui:delete/' + url, (event, arg) => {
           this.ngZone.run(() => {
-            observer.next(arg);
-            observer.complete();
+            if (arg.error) {
+              observer.error(arg.content);
+            } else {
+              observer.next(arg.content);
+              observer.complete();
+            }
           });
         });
         this.electronService.ipcRenderer.send('main:delete/' + url,
@@ -110,7 +133,9 @@ export class HttpElectronService {
         );
       });
     } else {
-      return this.httpClient.delete(url, httpOptions);
+      return this.httpClient.delete(url, httpOptions).pipe(
+        catchError(e => this.handleError(e.error))
+      );
     }
   }
 
@@ -129,6 +154,11 @@ export class HttpElectronService {
       args.body = requestBody;
     }
     return args;
+  }
+
+  private handleError(error: any) {
+    console.log('ERROR', error);
+    return throwError(error);
   }
 
 }
