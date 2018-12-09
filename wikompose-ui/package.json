@@ -23,6 +23,7 @@
     "@fortawesome/fontawesome-free": "^5.4.1",
     "angular-resizable-element": "^3.2.2",
     "bulma": "^0.7.1",
+    "bulma-toast": "^1.4.0",
     "core-js": "^2.5.4",
     "electron": "^3.0.2",
     "ng2-ace-editor": "^0.3.8",

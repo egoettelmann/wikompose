@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ElectronService } from 'ngx-electron';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { toast } from 'bulma-toast';
 
 /**
  * Wrapper for using both HttpClient / IPCRenderer, depending on the current runtime environment.
@@ -158,6 +159,12 @@ export class HttpElectronService {
 
   private handleError(error: any) {
     console.log('ERROR', error);
+    toast({
+      message: error.message + ': ' + error.details,
+      duration: 5000,
+      type: 'is-danger',
+      dismissible: true
+    });
     return throwError(error);
   }
 

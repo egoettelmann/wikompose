@@ -29,6 +29,7 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": [
+              "node_modules/bulma-toast/dist/bulma-toast.min.js",
               "node_modules/marked/lib/marked.js",
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/plugins/custom-class/prism-custom-class.min.js",
