@@ -9,13 +9,16 @@ export class ConfigurationService {
 
   private static readonly CONFIG_FILENAME = '/.config';
 
+  private configurationProperties: ConfigurationProperties;
+
   /**
    * Gets the configuration properties of the application.
    */
   public getConfiguration(): ConfigurationProperties {
-    const parsedConfig = this.getSavedConfiguration();
-    const defaultConfig = new ConfigurationProperties();
-    return Object.assign({}, defaultConfig, parsedConfig);
+    if (!this.configurationProperties) {
+      this.reloadConfigurationProperties();
+    }
+    return this.configurationProperties;
   }
 
   /**
@@ -43,6 +46,16 @@ export class ConfigurationService {
     savedConfiguration[property] = value;
     const stringifiedConfig = JSON.stringify(savedConfiguration);
     fs.writeFileSync(this.getConfigurationFilePath(), stringifiedConfig, 'utf8');
+    this.reloadConfigurationProperties();
+  }
+
+  /**
+   * Reloads the configuration properties in memory
+   */
+  private reloadConfigurationProperties(): void {
+    const parsedConfig = this.getSavedConfiguration();
+    const defaultConfig = new ConfigurationProperties();
+    this.configurationProperties = Object.assign({}, defaultConfig, parsedConfig);
   }
 
   /**

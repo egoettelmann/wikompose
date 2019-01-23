@@ -22,7 +22,7 @@ export class FolderComponent implements OnChanges {
   @ViewChild('itemInput') itemInput: ElementRef;
 
   public create: CreateItem;
-  public opened = true;
+  public opened = false;
   public sortedItems: { key: string, value: any }[];
 
   constructor(

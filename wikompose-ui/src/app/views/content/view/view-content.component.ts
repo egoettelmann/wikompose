@@ -25,10 +25,12 @@ export class ViewContentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.route.queryParamMap.subscribe(queryParams => {
       const rawFilePath = queryParams.get('file');
-      const filePath = FileService.decodeFilePath(rawFilePath);
-      this.fileService.getContent(filePath).subscribe(content => {
-        this.file = content;
-      });
+      if (rawFilePath) {
+        const filePath = FileService.decodeFilePath(rawFilePath);
+        this.fileService.getContent(filePath).subscribe(content => {
+          this.file = content;
+        });
+      }
     });
   }
 

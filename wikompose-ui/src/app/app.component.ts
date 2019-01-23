@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
         this.router.navigate([{ outlets: { 'modal': ['settings'] } }]);
       } else {
         this.files = fileTree;
-        this.router.navigate(['/content/view'], { queryParams: { file: ['notes'] } });
+        this.router.navigate(['/content/view']);
       }
     });
   }

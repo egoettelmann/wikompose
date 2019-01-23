@@ -2,26 +2,22 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { ConfigurationService } from './configuration.service';
 import { injectable } from 'inversify';
-import { ConfigurationProperties } from '../models/configuration.model';
 import { InternalError } from '../models/errors.model';
 
 @injectable()
 export class FileManagementService {
 
-  private configuration: ConfigurationProperties;
-
   constructor(private configurationService: ConfigurationService) {
-    this.configuration = configurationService.getConfiguration();
   }
 
   /**
    * Gets all files as a tree (organized by folders).
    */
   public getFileTree() {
-    if (!this.configuration.contentPath) {
+    if (!this.configurationService.getConfiguration().contentPath) {
       throw new InternalError('501', 'contend_path_undefined', 'No content path defined');
     }
-    return this.walkSync(this.configuration.contentPath);
+    return this.walkSync(this.configurationService.getConfiguration().contentPath);
   }
 
   /**
@@ -30,7 +26,7 @@ export class FileManagementService {
    * @param filePath the file path as an array
    */
   public getFileContent(filePath: string[]): string {
-    const file = path.join(this.configuration.contentPath, ...filePath) + '.md';
+    const file = path.join(this.configurationService.getConfiguration().contentPath, ...filePath) + '.md';
     return fs.readFileSync(file, 'utf8');
   }
 
@@ -41,7 +37,7 @@ export class FileManagementService {
    * @param fileContent the new file content
    */
   public saveFileContent(filePath: string[], fileContent: string): void {
-    const file = path.join(this.configuration.contentPath, ...filePath) + '.md';
+    const file = path.join(this.configurationService.getConfiguration().contentPath, ...filePath) + '.md';
     fs.writeFileSync(file, fileContent, 'utf8');
   }
 
@@ -52,7 +48,7 @@ export class FileManagementService {
    * @param fileContent the new file content
    */
   public createFile(filePath: string[], fileContent: string) {
-    const file = path.join(this.configuration.contentPath, ...filePath) + '.md';
+    const file = path.join(this.configurationService.getConfiguration().contentPath, ...filePath) + '.md';
     fs.writeFileSync(file, fileContent, 'utf8');
   }
 
@@ -62,7 +58,7 @@ export class FileManagementService {
    * @param filePath the file path as an array
    */
   public createFolder(filePath: string[]) {
-    const folder = path.join(this.configuration.contentPath, ...filePath);
+    const folder = path.join(this.configurationService.getConfiguration().contentPath, ...filePath);
     if (!fs.existsSync(folder)) {
       fs.mkdirSync(folder);
     }
@@ -74,7 +70,7 @@ export class FileManagementService {
    * @param filePath the file path as an array
    */
   public deleteFile(filePath: string[]) {
-    const folder = path.join(this.configuration.contentPath, ...filePath);
+    const folder = path.join(this.configurationService.getConfiguration().contentPath, ...filePath);
     const file = folder + '.md';
     if (fs.existsSync(folder)) {
       this.rmdirForceSync(folder);

@@ -24,7 +24,7 @@ export class SettingsComponent implements OnInit {
 
   onValueChange(property: string, event: any) {
     this.configurationService.setConfiguration(property, event.target.value).subscribe(() => {
-      console.log('done');
+      this.router.navigate(['/content/view']);
     });
   }
 
